@@ -1,7 +1,7 @@
-// src/server.ts
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import supabase from './supabaseConnection';
+import serverless from 'serverless-http'
 
 const app = express();
 app.use(bodyParser.json());
@@ -126,6 +126,8 @@ app.put('/users/:id', async (req: Request<{ id: string }, {}, Partial<Users>>, r
 const port = process.env.PORT ? Number(process.env.PORT) : 3333;
 const host = '0.0.0.0';
 
-app.listen(port, host, () => {
-  console.log(`Server working on http://${host}:${port}`);
-});
+// app.listen(port, host, () => {
+//   console.log(`Server working on http://${host}:${port}`);
+// });
+
+export const handler = serverless(app)
