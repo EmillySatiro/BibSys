@@ -10,8 +10,7 @@ const supabaseKey = process.env.SUPABASE_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: {
         persistSession: false,
-        // autoRefreshToken: true,
     },
 });
 
-module.exports = supabase
+export {supabase};

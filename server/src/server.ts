@@ -1,3 +1,5 @@
+import { supabase } from './supabaseConnection.js'
+import serverless from 'serverless-http'
 import fastify = require("fastify");
 
 const sp = require('./supabaseConnection');
@@ -38,16 +40,18 @@ app.post("/users", async (request, response) => {
     }
 })
 
-app.listen(
-  {
-    host: '0.0.0.0',
-    port: process.env.PORT ? Number(process.env.PORT) : 3333,
-  },
-  (err) => {
-    if (err) {
-      console.error('Error starting server:', err);
-      process.exit(1);
-    }
-    console.log('Server working');
-  }
-);
+export const handler = serverless(app)
+
+// app.listen(
+//   {
+//     host: '0.0.0.0',
+//     port: process.env.PORT ? Number(process.env.PORT) : 3333,
+//   },
+//   (err) => {
+//     if (err) {
+//       console.error('Error starting server:', err);
+//       process.exit(1);
+//     }
+//     console.log('Server working');
+//   }
+// );
