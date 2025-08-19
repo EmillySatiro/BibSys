@@ -1,7 +1,6 @@
-import serverless from "serverless-http";
-import app from "../server/src/server.js";
+import { handler } from '../server/src/server'
 
-export const GET = serverless(app);
-export const POST = serverless(app);
-export const PUT = serverless(app);
-export const DELETE = serverless(app);
+export const GET = handler
+export const POST = handler
+export const PUT = handler
+export const DELETE = handler
