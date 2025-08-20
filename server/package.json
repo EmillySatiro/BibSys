@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "vercel-build": "cross-env npx supabase link --project-ref arzbcflugfoauhfnnsef && npx supabase db push --yes"
+    "vercel-build": "npx supabase link --project-ref arzbcflugfoauhfnnsef && npx supabase db push --yes"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
