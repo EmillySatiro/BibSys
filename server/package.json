@@ -4,8 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/server.ts",
-    "vercel-build": "cross-env $SUPABASE_ACCESS_TOKEN $SUPABASE_DB_PASSWORD npx supabase link --project-ref arzbcflugfoauhfnnsef && npx supabase db push --yes"
+    "dev": "tsx src/server.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
