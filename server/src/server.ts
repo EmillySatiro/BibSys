@@ -54,18 +54,6 @@ app.get('/users/:id', async (req: Request<{ id: string }>, res: Response) => {
   }
 });
 
-app.get('/books', async (_req: Request, res: Response) => {
-  try {
-    const { data: books, error } = await supabase.from('books').select('*');
-    if (error) throw error;
-
-    res.json({ value: books });
-  } catch (error) {
-    console.error('Error fetching books:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 app.post('/users', async (req: Request<{}, {}, Users>, res: Response) => {
   try {
     const { name, email } = req.body;
@@ -123,12 +111,96 @@ app.put('/users/:id', async (req: Request<{ id: string }, {}, Partial<Users>>, r
   }
 });
 
-// const port = process.env.PORT ? Number(process.env.PORT) : 3333;
-// const host = '0.0.0.0';
+app.get('/books', async (_req: Request, res: Response) => {
+  try {
+    const { data: books, error } = await supabase.from('books').select('*');
+    if (error) throw error;
 
-// app.listen(port, host, () => {
-//   console.log(`Server working on http://${host}:${port}`);
-// });
+    res.json({ value: books });
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/books/:id', async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const { id } = req.params
+
+    const { data: book, error } = await supabase.from('books').select('*').eq('id', id).single()
+
+    if (error) throw error
+
+    res.json({ value: book || null })
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+})
+
+app.post('/books', async (req: Request<{}, {}, Book>, res: Response) => {
+
+
+  try {
+
+    const { title, author, pages, year } = req.body;
+
+    const { data: createdBook, error } = await supabase
+      .from('books')
+      .insert([{ title, author, pages, year }])
+      .select()
+
+    if (error) throw error
+
+    res.json({ value: createdBook ? createdBook[0] : null })
+  } catch (error) {
+    console.error('Error creating book:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+})
+
+app.delete('books/:id', async (req: Request<{ id: string }>, res: Response) => {
+  try {
+
+    const { id } = req.params;
+
+    const { data: deletedBook, error } = await supabase
+      .from('books')
+      .delete()
+      .eq('id', id)
+      .select()
+
+    if (error) throw error;
+
+    res.json({ value: deletedBook ? deletedBook[0] : null });
+
+
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+app.put('/book/:id', async (req: Request<{ id: string }, {}, Partial<Book>>, res: Response) => {
+  try {
+
+    const { id } = req.params;
+    const { title, author, pages, year } = req.body;
+
+    const { data: updatedBook, error } = await supabase.from('books').update({ title, author, pages, year }).eq('id', id).select()
+
+    if (error) throw error;
+
+    res.json({ value: updatedBook ? updatedBook[0] : null })
+
+  } catch (error) {
+    console.error('Error updating book:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 
 export const handler = serverless(app)
 export default app
