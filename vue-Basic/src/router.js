@@ -4,6 +4,7 @@ import Cadastro from './Cadastro_usuario.vue'
 import Home from './Home.vue'
 import Cadastrarlivro from './Cadastrarlivro.vue'
 import Editarlivro from './Editarlivro.vue'
+import Livro from './Livro.vue'
 
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: '/editarlivro',
     name: 'EditarLivro',
     component: Editarlivro
+  },
+  {
+    path: '/livro',
+    name: 'Livro',
+    component: Livro
   }
 ]
 

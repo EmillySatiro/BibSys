@@ -25,27 +25,22 @@ function irParaCadastrar() {
       </div>
 
     <!-- Boas-vindas -->
-    <div class="bem-vindo">Bem Vindo ao BigSys !!</div>
-
-    <div class="container2">
-      <div class="b1"></div>
-      <div class="b2"></div>
-      <div class="b3"></div>
-      <div class="b4"></div>
-      <div class="b5"></div>
-    </div>
-
+    <div class="Titulo">Carmilla !!</div>
 
   <!-- Botões de ação -->
   <div class="botao botao-cadastrar" @click="irParaCadastrar"></div>
   <div class="botao botao-listar"></div>
 
-  <div class="texto-cadastrar"@click="irParaCadastrar">Cadastrar livro</div>
-  <div class="texto-listar">Listar livros</div>
-
+  <div class="texto-cadastrar"@click="irParaCadastrar">Edite livro</div>
+  <div class="texto-listar">Excluir livros</div>
+    
 
     <!-- Texto motivacional -->
-    <div class="texto-motivacional">Deixe sua sede de conhecimento levá-lo além das estrelas.</div>
+    <div class="autor"> Autor: Joseph Sheridan Le Fanu</div>
+    <div class="ano"> Ano de publicação: 1872 </div>
+    <div class="Numeropg"> Número de página: 176 </div>
+
+   
   </div>
 </template>
 
@@ -97,8 +92,6 @@ function irParaCadastrar() {
   height: 255.13px;
 }
 
-
-
 /* Marca BibSys */
 .marca {
   width: 321px;
@@ -113,10 +106,10 @@ function irParaCadastrar() {
 }
 
 /* Boas-vindas */
-.bem-vindo {
+.Titulo {
   width: 449px;
   height: 52px;
-  left: 758px;
+  left: 889px;
   top: 83px;
   position: absolute;
   color: #F1F7F7;
@@ -124,43 +117,6 @@ function irParaCadastrar() {
   font-family: Tektur, sans-serif;
   font-weight: 400;
 }
-
-/* Blocos verdes */
-.bloco-verde {
-  width: 105px;
-  height: 133px;
-  position: absolute;
-  background: #2CC295;
-  border: 2px solid #F1F7F7;
-}
-
-.container2 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
-.container2 .b1,
-.container2 .b2,
-.container2 .b3,
-.container2 .b4,
-.container2 .b5 {
-  width: 105px;
-  height: 133px;
-  left: px;
-  position: absolute;
-  background: var(--Color-4, #2CC295);
-  border: 2px var(--Color-5, #F1F7F7) solid;
-}
-
-.container2 .b1 { left: 896px; top: 371px; }
-.container2 .b2 { left: 911px; top: 386px; }
-.container2 .b3 { left: 930px; top: 406px; }
-.container2 .b4 { left: 948px; top: 422px; }
-.container2 .b5 { left: 963px; top: 437px; }
-
-
-
 
 /* Botões */
 .botao {
@@ -172,18 +128,18 @@ function irParaCadastrar() {
 }
 
 .botao-cadastrar { 
-  left: 830px; 
+  left: 230px; 
   top: 200px ; 
   cursor: pointer;
   }
-.botao-listar { left: 830px; top: 300px; }
+.botao-listar { left: 230px; top: 300px; }
 
 /* Textos dos botões */
 .texto-cadastrar {
   cursor: pointer;
   width: 302px;
   height: 52px;
-  left: 840px;
+  left: 240px;
   top: 200px;
   position: absolute;
   color: #021A1A;
@@ -195,7 +151,7 @@ function irParaCadastrar() {
 .texto-listar {
   width: 249px;
   height: 52px;
-  left: 865px;
+  left: 265px;
   top: 300px;
   position: absolute;
   color: #021A1A;
@@ -204,16 +160,41 @@ function irParaCadastrar() {
   font-weight: 400;
 }
 
-/* Texto motivacional */
-.texto-motivacional {
+
+.autor {
   width: 300px;
   height: 60px;
-  left: 820px; 
-  top: 580px;
+  left: 830px; 
+  top: 620px;
   position: absolute;
   text-align: center;
   color: #F1F7F7;
-  font-size: 24px;
+  font-size: 18px;
+  font-family: Tektur, sans-serif;
+  font-weight: 400;
+}
+
+.ano {
+  width: 300px;
+  height: 60px;
+  left: 830px; 
+  top: 590px;
+  position: absolute;
+  text-align: center;
+  color: #F1F7F7;
+  font-size: 18px;
+  font-family: Tektur, sans-serif;
+  font-weight: 400;
+}
+.Numeropg {
+  width: 300px;
+  height: 60px;
+  left: 830px; 
+  top: 550px;
+  position: absolute;
+  text-align: center;
+  color: #F1F7F7;
+  font-size: 18px;
   font-family: Tektur, sans-serif;
   font-weight: 400;
 }
