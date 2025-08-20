@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# Vite build output
+dist/
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Optional: arquivos temporários
+*.tmp
+*.swp
