@@ -1,4 +1,13 @@
+
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function irParaCadastrar() {
+  router.push('/cadastrarlivro')
+}
+
 </script>
 
 <template>
@@ -33,12 +42,13 @@
     </div>
 
 
-    <!-- Botões de ação -->
-    <div class="botao botao-cadastrar"></div>
-    <div class="botao botao-listar"></div>
+  <!-- Botões de ação -->
+  <div class="botao botao-cadastrar" @click="irParaCadastrar"></div>
+  <div class="botao botao-listar"></div>
 
-    <div class="texto-cadastrar">Cadastrar livro</div>
-    <div class="texto-listar">Listar livros</div>
+  <div class="texto-cadastrar"@click="irParaCadastrar">Cadastrar livro</div>
+  <div class="texto-listar">Listar livros</div>
+
 
     <!-- Texto motivacional -->
     <div class="texto-motivacional">Deixe sua sede de conhecimento levá-lo além das estrelas.</div>
@@ -174,11 +184,16 @@
   border: 2px solid black;
 }
 
-.botao-cadastrar { left: 830px; top: 200px }
+.botao-cadastrar { 
+  left: 830px; 
+  top: 200px ; 
+  cursor: pointer;
+  }
 .botao-listar { left: 830px; top: 300px; }
 
 /* Textos dos botões */
 .texto-cadastrar {
+  cursor: pointer;
   width: 302px;
   height: 52px;
   left: 840px;
