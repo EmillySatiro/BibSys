@@ -3,17 +3,31 @@
 
 <template>
   <div class="pagina">
-    <!-- bloco preto -->
     <div class="bloco-preto">
-      <!-- caixa translúcida -->
+      <!-- Caixa translúcida -->
       <div class="bloco-cinza">
-        <!-- Título grande -->
+        <!-- Título -->
         <h1 class="titulo">Login</h1>
 
-        <!-- Labels -->
+        <!-- Ícone Email -->
+        <div class="email-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+            <image href="/Pngs/mdi_email.ico" width="40" height="40"/>
+          </svg>
+        </div>
+
+        <!-- Label E-mail -->
         <p class="subtitulo email-label">E-mail</p>
         <div class="linha email-line"></div>
 
+        <!-- Ícone Cadeado -->
+        <div class="lock-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+            <image href="/Pngs/bi_lock-fill.ico" width="40" height="40"/>
+          </svg>
+        </div>
+
+        <!-- Label Password -->
         <p class="subtitulo password-label">Password</p>
         <div class="linha password-line"></div>
 
@@ -27,19 +41,13 @@
         </p>
       </div>
 
-      <!-- Ícones -->
-      <div class="icon email-icon">
-        <div class="icon-inner"></div>
+      <!-- SVG decorativo -->
+      <div class="svg-container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
+          <image href="/favicon.ico" width="292.607" height="255.13"/>
+        </svg>
       </div>
-      <div class="icon password-icon">
-        <div class="icon-inner"></div>
-      </div>
-         <!-- SVG -->
-        <div class="svg-container">
-            <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
-              <image href="/favicon.ico" width="292.607" height="255.13"/>
-            </svg>
-          </div>
+
       <!-- Logo -->
       <h2 class="marca">BibSys</h2>
     </div>
@@ -61,7 +69,7 @@
   position: relative;
 }
 
-/* bloco preto */
+/* Bloco preto */
 .bloco-preto {
   width: 1455px;
   height: 895px;
@@ -71,9 +79,9 @@
   top: calc((982px - 895px)/2);
 }
 
-/* caixa cinza translúcida */
+/* Caixa cinza translúcida */
 .bloco-cinza {
-  position: absolute;
+  position: relative; 
   width: 800px;
   height: 514.896px;
   top: 120px;
@@ -81,60 +89,93 @@
   background: rgba(185, 185, 185, 0.22);
   border: 2px solid #F1F7F7;
   box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   padding: 24px;
 }
 
-/* Título grande */
+/* Título */
 .titulo {
+  position: absolute;
+  top: 32px;
+  left: 322px;
   font-family: "Tektur", sans-serif;
   font-size: 64px;
   font-weight: 400;
   color: #FFF;
-  margin: 0 0 16px 0;
+  margin: 0;
 }
 
-/* Labels e linhas */
-.subtitulo {
+/* Ícone Email */
+.email-icon {
+  position: absolute;
+  top: 130px;   /* do topo da caixa */
+  left: 600px;  /* da esquerda da caixa */
+}
+
+/* Label Email */
+.email-label {
+  position: absolute;
+  top: 130px;
+  left: 125px;
   font-family: "Tektur", sans-serif;
   font-size: 24px;
-  font-weight: 400;
   color: #FFF;
-  margin: 0 0 8px 0;
+  margin: 0;
 }
 
-.linha {
+/* Linha Email */
+.email-line {
+  position: absolute;
+  top: 180px;
+  left: 125px;
   width: 514px;
   height: 1px;
   background: #FFF;
-  margin-bottom: 24px;
 }
 
-.email-label {
-  margin-top: 16px;
+/* Ícone Cadeado */
+.lock-icon {
+  position: absolute;
+  top: 250px;
+  left: 600px;
 }
 
+/* Label Password */
 .password-label {
-  margin-top: 16px;
+  position: absolute;
+  top: 250px;
+  left: 125px;
+  font-family: "Tektur", sans-serif;
+  font-size: 24px;
+  color: #FFF;
+  margin: 0;
 }
 
-/* Botão login */
+/* Linha Password */
+.password-line {
+  position: absolute;
+  top: 300px;
+  left: 125px;
+  width: 514px;
+  height: 1px;
+  background: #FFF;
+}
+
+/* Botão Login */
 .login-button-bg {
+  position: absolute;
+  top: 390px;
+  left: 230px;
   width: 344px;
   height: 65px;
   background: #2CC295;
   border-radius: 20px;
-  margin-top: 24px;
 }
 
 .login-button-text {
   position: absolute;
-  left: 456px;
-  top: 674px;
-  color: white;
+  top: 400px;
+  left: 360px;
+  color: #FFF;
   font-size: 36px;
   font-family: "Tektur", sans-serif;
   font-weight: 400;
@@ -142,73 +183,43 @@
 
 /* Texto de cadastro */
 .signup-text {
+  position: absolute;
+  top: 460px;
+  left: 220px;
   font-size: 20px;
-  font-family: "Tektur", sans-serif;
-  color: white;
-  margin-top: 16px;
+  color: #FFF;
 }
 
 .signup-text .highlight {
   color: #2CC295;
 }
 
-/* Ícones */
-.icon {
-  position: absolute;
-  overflow: hidden;
-}
-
-.email-icon {
-  width: 36px;
-  height: 36px;
-  left: 727px;
-  top: 367px;
-}
-
-.password-icon {
-  width: 39px;
-  height: 39px;
-  left: 721px;
-  top: 472px;
-}
-
-.icon-inner {
-  position: absolute;
-  background: #2CC295;
-}
-
-.email-icon .icon-inner {
-  width: 30px;
-  height: 24px;
-  left: 3px;
-  top: 6px;
-}
-
-.password-icon .icon-inner {
-  width: 29px;
-  height: 39px;
-  left: 5px;
-  top: 0;
-}
-
+/* SVG decorativo */
 .svg-container {
-  position: absolute;  /* relativo ao bloco preto */
-  top: 214px;          /* distância do topo do bloco preto */
-  left: 1014px;        /* distância da esquerda do bloco preto */
+  position: absolute;
+  top: 214px;
+  left: 1014px;
   width: 292.607px;
   height: 255.13px;
 }
 
 /* Logo */
 .marca {
-  position: absolute;      /* posição relativa ao bloco preto */
-  top: 485px;              /* distância do topo do bloco preto */
-  left: 1030px;            /* distância da esquerda do bloco preto */
+  position: absolute;
+  top: 485px;
+  left: 1030px;
   font-family: "Stick No Bills", sans-serif;
   font-size: 116px;
   font-weight: 400;
   color: #FFF;
-  margin: 0;               /* remove margin padrão */
+  margin: 0;
 }
 
+/* Ícones SVG */
+.email-icon svg, .lock-icon svg {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+}
 </style>
