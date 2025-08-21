@@ -1,35 +1,36 @@
 <template>
   <div class="tela-cadastro">
     <!-- Fundo SVG -->
-   <div class="svg-container2" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 2000 2153.885"
-            preserveAspectRatio="xMidYMid slice"
-            width="100%" height="100%">
-            <image href="/Pngs/fundo-estrelas.ico" width="100%" height="100%"/>
-        </svg>
-        </div>
+    <div class="svg-container2" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 2000 2153.885"
+           preserveAspectRatio="xMidYMid slice"
+           width="100%" height="100%">
+        <image href="/Pngs/fundo-estrelas.ico" width="100%" height="100%"/>
+      </svg>
+    </div>
 
-
-    <!-- Fundo preto sobre o SVG (opcional, caso queira efeito) -->
+    <!-- Fundo preto -->
     <div class="fundo-geral"></div>
 
-    <!-- Caixa maior central com TODO o conteúdo -->
+    <!-- Caixa principal -->
     <div class="caixa-principal">
-      
+
       <!-- Caixas secundárias -->
       <div class="caixa-formulario"></div>
       <div class="caixa-rodape"></div>
-     
-      <!-- Botão cadastrar -->
-      <div class="botao-cadastrar">Cadastrar livro</div>
 
-      <!-- Inputs do formulário -->
-      <div class="input-bg titulo"></div>
-      <div class="input-bg autor"></div>
-      <div class="input-bg ano"></div>
-      <div class="input-bg paginas"></div>
-      <div class="input-bg descricao"></div>
+      <!-- Inputs reais -->
+      <input v-model="titulo" type="text" class="input-real titulo" placeholder="Digite o título do livro"/>
+      <input v-model="autor" type="text" class="input-real autor" placeholder="Digite o nome do autor"/>
+      <input v-model="ano" type="text" class="input-real ano" placeholder="DD/MM/AAAA"/>
+      <input v-model="paginas" type="number" class="input-real paginas" placeholder="Digite a quantidade de páginas"/>
+      <input v-model="descricao" type="text" class="input-real descricao" placeholder="Informe URL da imagem"/>
+
+      <!-- Botões -->
+      <div class="botao-cadastrar" @click="cadastrarLivro">Cadastrar livro</div>
+      <p class="signup-text">
+         Quer voltar a Home? <span class="highlight" @click="voltarHome">Clique aqui</span> .</p>
 
       <!-- Labels -->
       <div class="label titulo">Título do livro</div>
@@ -38,23 +39,14 @@
       <div class="label paginas">Quantidade de páginas</div>
       <div class="label descricao">Informe URL da imagem</div>
 
-      <!-- Placeholders -->
-      <div class="placeholder titulo">Digite o título do livro</div>
-      <div class="placeholder autor">Digite o nome do autor</div>
-      <div class="placeholder ano">DD/MM/AAAA</div>
-      <div class="placeholder paginas">Digite a quantidade de páginas</div>
-      <div class="placeholder descricao">Informe URL da imagem </div>
-
-      <!-- Texto e títulos -->
+      <!-- Títulos e textos -->
       <div class="titulo-principal">BibSys</div>
-      <!-- SVG decorativo -->
 
       <div class="svg-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
           <image href="/favicon.ico" width="200" height="100"/>
         </svg>
       </div>
-      
 
       <div class="descricao-formulario">
         <span class="highlight">Informe</span>
@@ -66,15 +58,51 @@
       </div>
       <div class="slogan">Onde o conhecimento se torna cósmico</div>
 
-      <!-- Linha vertical decorativa -->
       <div class="linha-vertical"></div>
+
+      <!-- Popup -->
+      <div v-if="showPopup" :class="['popup', popupType]">{{ popupMessage }}</div>
 
     </div>
   </div>
 </template>
 
 <script setup>
-// Por enquanto vazio
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const titulo = ref('')
+const autor = ref('')
+const ano = ref('')
+const paginas = ref('')
+const descricao = ref('')
+
+const popupMessage = ref('')
+const popupType = ref('')
+const showPopup = ref(false)
+
+function cadastrarLivro() {
+  if(titulo.value && autor.value && ano.value && paginas.value && descricao.value){
+    popupMessage.value = 'Livro cadastrado com sucesso!'
+    popupType.value = 'success'
+    showPopup.value = true
+    setTimeout(() => {
+      showPopup.value = false
+      router.push({ name: 'Home' }) // volta para home
+    }, 1500)
+  } else {
+    popupMessage.value = 'Preencha todos os campos!'
+    popupType.value = 'error'
+    showPopup.value = true
+    setTimeout(() => showPopup.value = false, 1500)
+  }
+}
+
+function voltarHome() {
+  router.push({ name: 'Home' })
+}
 </script>
 
 <style scoped>
@@ -84,128 +112,118 @@ html, body {
   padding: 0;
 }
 
-
-/* SVG de fundo que acompanha todo o documento (inclui scroll) */
-.svg-container2 {
-  position: absolute;    /* acompanha a altura do container pai */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;             /* estica desde o topo até o fim do conteúdo */
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;            /* fica atrás de .fundo-geral e do conteúdo */
-  pointer-events: none;  /* evita que o SVG capture cliques */
-}
-
-
 .tela-cadastro {
-  position: relative;  /* necessário para que o absolute do svg se baseie aqui */
+  position: relative;
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-/* Se você usa .fundo-geral como overlay leve: */
+/* SVG de fundo */
+.svg-container2 {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.signup-text {
+  position: absolute;
+  bottom: 24px;
+  top: 30px;
+  left:1000px; /* alinhamento dentro da caixa cinza */
+  font-size: 20px;
+  color: #FFF;
+}
+
+.signup-text .highlight {
+  color: #2CC295;
+  font-weight: 600;
+  cursor: pointer;
+}
 .fundo-geral {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: black;
-  opacity: 0.3; /* ajuste conforme quiser */
+  opacity: 0.3;
   z-index: 1;
 }
 
-/* SVG decorativo */
-.svg-container {
-  position: absolute;
-  top: 110px;
-  left: 400px;
-  width: 93.14px;
-  height: 86.383px;
-}
-
-/* Diminuindo tudo em 30px proporcionalmente */
 .caixa-principal {
   width: 1376px;
   height: 858px;
   position: absolute;
-  left: 71px;
-  top: -50px;
+  left: 71px; top: -30px;
   background: #021A1A;
   border: 2px solid #021A1A;
   z-index: 1;
-
-  /* 👇 reduz TUDO dentro da caixa */
-  transform: scale(0.85); /* 30px de redução aproximada proporcional */
- 
+  transform: scale(0.85);
 }
 
 /* Caixas secundárias */
 .caixa-formulario {
-  width: 1242px;
-  height: 466px;
-  position: absolute;
-  left: 71px;
-  top: 269px;
-  background: #111;
-  border: 2px solid #F1F7F7;
+  width: 1242px; height: 466px;
+  position: absolute; left: 71px; top: 269px;
+  background: #111; border: 2px solid #F1F7F7;
   z-index: 2;
 }
-
 .caixa-rodape {
-  width: 1242px;
-  height: 61px;
-  position: absolute;
-  left: 71px;
-  top: 757px;
-  background: #111;
-  border: 2px solid #F1F7F7;
+  width: 1242px; height: 61px;
+  position: absolute; left: 71px; top: 757px;
+  background: #111; border: 2px solid #F1F7F7;
   z-index: 2;
 }
 
-/* Botão cadastrar */
-.botao-cadastrar {
-  width: 302px;
-  height: 52px;
-  position: absolute;
-  left: 894px;
-  top: 759px;
-  background: #F1F7F7;
-  color: #021A1A;
-  font-size: 40px;
-  font-family: Tektur;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 3;
-}
-
-/* Inputs e backgrounds */
-.input-bg {
+/* Inputs reais */
+.input-real {
   position: absolute;
   background: rgba(241,247,247,0.11);
   border: 2px solid #F1F7F7;
-  z-index: 2;
+  z-index: 3;
+  color: #fff;
+  font-size: 24px;
+  font-family: Tektur;
+  padding: 8px;
 }
-.input-bg.titulo { left: 112px; top: 337px; width: 469px; height: 46px; }
-.input-bg.autor { left: 112px; top: 450px; width: 469px; height: 46px; }
-.input-bg.ano { left: 112px; top: 553px; width: 469px; height: 46px; }
-.input-bg.paginas { left: 112px; top: 654px; width: 469px; height: 46px; }
-.input-bg.descricao { left: 818px; top: 348px; width: 469px; height: 234px; }
+.input-real.titulo { left: 112px; top: 337px; width: 469px; height: 46px; }
+.input-real.autor { left: 112px; top: 450px; width: 469px; height: 46px; }
+.input-real.ano { left: 112px; top: 553px; width: 469px; height: 46px; }
+.input-real.paginas { left: 112px; top: 654px; width: 469px; height: 46px; }
+.input-real.descricao { left: 818px; top: 348px; width: 469px; height: 234px; }
+
+/* Botões */
+.botao-cadastrar, .botao-voltar {
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 3;
+  transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.3s;
+  font-family: Tektur;
+}
+.botao-cadastrar {
+  width: 302px; height: 52px;
+  position: absolute; left:894px; top:759px;
+  background: #F1F7F7; color: #021A1A;
+  font-size: 40px;
+}
+.botao-voltar {
+  width: 302px; height: 52px;
+  position: absolute; left:894px; top:820px;
+  background: #F1F7F7; color: #021A1A;
+  font-size: 28px;
+}
+
+.botao-cadastrar:hover, .botao-voltar:hover {
+  background-color: #2CC295;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(44, 194, 149, 0.4);
+}
 
 /* Labels */
 .label {
   position: absolute;
-  color: white;
-  font-size: 24px;
-  font-family: Tektur;
-  z-index: 3;
+  color: white; font-size: 24px; font-family: Tektur; z-index: 4;
 }
 .label.titulo { left: 111px; top: 298px; }
 .label.autor { left: 112px; top: 415px; }
@@ -213,67 +231,47 @@ html, body {
 .label.paginas { left: 111px; top: 616px; }
 .label.descricao { left: 820px; top: 306px; }
 
-/* Placeholders */
-.placeholder {
-  position: absolute;
-  color: rgba(255,255,255,0.28);
-  font-size: 24px;
-  font-family: Tektur;
-  z-index: 3;
-}
-.placeholder.titulo { left: 119px; top: 346px; }
-.placeholder.autor { left: 116px; top: 457px; }
-.placeholder.ano { left: 131px; top: 560px; }
-.placeholder.paginas { left: 118px; top: 661px; }
-.placeholder.descricao { left: 831px; top: 356px; }
-
-/* Títulos e textos */
+/* Textos e SVG */
 .titulo-principal {
-  position: absolute;
-  left: 80px;
-  top: 82px;
-  color: white;
-  font-size: 128px;
-  font-family: "Stick No Bills";
-  font-weight: 400;
-  z-index: 4;
+  position: absolute; left: 80px; top: 82px;
+  color: white; font-size: 128px; font-family: "Stick No Bills"; font-weight: 400; z-index: 4;
+}
+.svg-container {
+  position: absolute; top: 110px; left: 400px;
+  width: 93.14px; height: 86.383px;
 }
 .descricao-formulario {
-  position: absolute;
-  left: 840px;
-  top: 620px;
-  width: 416px;
-  text-align: center;
-  font-size: 24px;
-  font-family: Tektur;
-  color: white;
-  z-index: 4;
+  position: absolute; left: 840px; top: 620px;
+  width: 416px; text-align: center;
+  font-size: 24px; font-family: Tektur; color: white; z-index: 4;
 }
-.descricao-formulario .highlight {
-  color: #2CC295;
-}
+.descricao-formulario .highlight { color: #2CC295; }
 .slogan {
-  position: absolute;
-  left: 181px;
-  top: 774px;
-  width: 479px;
-  font-size: 24px;
-  font-family: Tektur;
-  color: #2CC295;
-  z-index: 4;
+  position: absolute; left: 181px; top: 774px;
+  width: 479px; font-size: 24px; font-family: Tektur; color: #2CC295; z-index: 4;
+}
+.linha-vertical {
+  width: 410px; height: 0px;
+  position: absolute; left: 775px; top: 293px;
+  transform: rotate(90deg); transform-origin: top left;
+  outline: 4px solid white; outline-offset: -2px; z-index: 2;
 }
 
-/* Linha vertical */
-.linha-vertical {
-  width: 410px;
-  height: 0px;
-  position: absolute;
-  left: 775px;
-  top: 293px;
-  transform: rotate(90deg);
-  transform-origin: top left;
-  outline: 4px solid white;
-  outline-offset: -2px;
-  z-index: 2;
+/* Popup */
+.popup {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px; padding: 20px 40px;
+  border-radius: 15px; text-align: center;
+  font-size: 24px; font-weight: 600; color: #fff;
+  z-index: 999;
+  box-shadow: 0 0 25px rgba(44, 194, 149, 0.7);
+  animation: popupAnim 0.3s ease-out;
+}
+.popup.error { background: #ff4c4c; text-shadow: 0 0 8px #ff0000; }
+.popup.success { background: #2CC295; text-shadow: 0 0 8px #00ff88; }
+@keyframes popupAnim {
+  0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 </style>
