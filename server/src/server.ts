@@ -3,7 +3,7 @@ import supabase from './supabaseConnection';
 import serverless from 'serverless-http';
 
 const app = express();
-app.use(express.json()); // Replace bodyParser.json()
+app.use(express.json()); 
 
 interface Users {
   id?: string;
@@ -18,6 +18,7 @@ interface Book {
   author: string;
   pages: number;
   year: number;
+  photos: string
 }
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -136,112 +137,112 @@ app.post('/login', async (req: Request<{}, {}, { email: string; password: string
   }
 });
 
-async function getUsers() {
-  try {
-    const { data: users, error } = await supabase.from('users').select('*');
-    if (error) throw error;
-    return { value: users, message: users.length === 0 ? 'No users found' : undefined };
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    throw error;
-  }
-}
+// async function getUsers() {
+//   try {
+//     const { data: users, error } = await supabase.from('users').select('*');
+//     if (error) throw error;
+//     return { value: users, message: users.length === 0 ? 'No users found' : undefined };
+//   } catch (error) {
+//     console.error('Error fetching users:', error);
+//     throw error;
+//   }
+// }
 
-app.get('/users', authMiddleware, async (_req: Request, res: Response) => {
-  try {
-    const result = await getUsers();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// app.get('/users', authMiddleware, async (_req: Request, res: Response) => {
+//   try {
+//     const result = await getUsers();
+//     res.json(result);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
-app.get('/users/:id', authMiddleware, async (req: Request<{ id: string }>, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { data: user, error } = await supabase.from('users').select('*').eq('id', id).single();
-    if (error && error.code === 'PGRST116') {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    if (error) throw error;
-    res.json({ value: user || null });
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// app.get('/users/:id', authMiddleware, async (req: Request<{ id: string }>, res: Response) => {
+//   try {
+//     const { id } = req.params;
+//     const { data: user, error } = await supabase.from('users').select('*').eq('id', id).single();
+//     if (error && error.code === 'PGRST116') {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     if (error) throw error;
+//     res.json({ value: user || null });
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
-app.post('/users', authMiddleware, async (req: Request<{}, {}, Users>, res: Response) => {
-  try {
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ error: 'Name and email are required' });
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
-    }
-    const { data: createdUser, error } = await supabase
-      .from('users')
-      .insert([{ name, email }])
-      .select()
-      .single();
-    if (error) throw error;
-    res.json({ value: createdUser });
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// app.post('/users', authMiddleware, async (req: Request<{}, {}, Users>, res: Response) => {
+//   try {
+//     const { name, email } = req.body;
+//     if (!name || !email) {
+//       return res.status(400).json({ error: 'Name and email are required' });
+//     }
+//     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+//       return res.status(400).json({ error: 'Invalid email format' });
+//     }
+//     const { data: createdUser, error } = await supabase
+//       .from('users')
+//       .insert([{ name, email }])
+//       .select()
+//       .single();
+//     if (error) throw error;
+//     res.json({ value: createdUser });
+//   } catch (error) {
+//     console.error('Error creating user:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
-app.delete('/users/:id', authMiddleware, async (req: Request<{ id: string }>, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { data: deletedUser, error } = await supabase
-      .from('users')
-      .delete()
-      .eq('id', id)
-      .select();
-    if (error) throw error;
-    if (!deletedUser || deletedUser.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json({ value: deletedUser[0] });
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// app.delete('/users/:id', authMiddleware, async (req: Request<{ id: string }>, res: Response) => {
+//   try {
+//     const { id } = req.params;
+//     const { data: deletedUser, error } = await supabase
+//       .from('users')
+//       .delete()
+//       .eq('id', id)
+//       .select();
+//     if (error) throw error;
+//     if (!deletedUser || deletedUser.length === 0) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     res.json({ value: deletedUser[0] });
+//   } catch (error) {
+//     console.error('Error deleting user:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
-app.put('/users/:id', authMiddleware, async (req: Request<{ id: string }, {}, Partial<Users>>, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { name, email } = req.body;
-    const updateData: Partial<Users> = {};
-    if (name !== undefined) updateData.name = name;
-    if (email !== undefined) {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return res.status(400).json({ error: 'Invalid email format' });
-      }
-      updateData.email = email;
-    }
-    if (Object.keys(updateData).length === 0) {
-      return res.status(400).json({ error: 'No fields provided for update' });
-    }
-    const { data: updatedUser, error } = await supabase
-      .from('users')
-      .update(updateData)
-      .eq('id', id)
-      .select();
-    if (error) throw error;
-    if (!updatedUser || updatedUser.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json({ value: updatedUser[0] });
-  } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// app.put('/users/:id', authMiddleware, async (req: Request<{ id: string }, {}, Partial<Users>>, res: Response) => {
+//   try {
+//     const { id } = req.params;
+//     const { name, email } = req.body;
+//     const updateData: Partial<Users> = {};
+//     if (name !== undefined) updateData.name = name;
+//     if (email !== undefined) {
+//       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+//         return res.status(400).json({ error: 'Invalid email format' });
+//       }
+//       updateData.email = email;
+//     }
+//     if (Object.keys(updateData).length === 0) {
+//       return res.status(400).json({ error: 'No fields provided for update' });
+//     }
+//     const { data: updatedUser, error } = await supabase
+//       .from('users')
+//       .update(updateData)
+//       .eq('id', id)
+//       .select();
+//     if (error) throw error;
+//     if (!updatedUser || updatedUser.length === 0) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     res.json({ value: updatedUser[0] });
+//   } catch (error) {
+//     console.error('Error updating user:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
 app.get('/books', authMiddleware, async (_req: Request, res: Response) => {
   try {
@@ -271,8 +272,8 @@ app.get('/books/:id', authMiddleware, async (req: Request<{ id: string }>, res: 
 
 app.post('/books', authMiddleware, async (req: Request<{}, {}, Book>, res: Response) => {
   try {
-    const { title, author, pages, year } = req.body;
-    if (!title || !author || !pages || !year) {
+    const { title, author, pages, year, photos } = req.body;
+    if (!title || !author || !pages || !year || photos) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     if (pages < 1 || year < 0) {
@@ -280,7 +281,7 @@ app.post('/books', authMiddleware, async (req: Request<{}, {}, Book>, res: Respo
     }
     const { data: createdBook, error } = await supabase
       .from('books')
-      .insert([{ title, author, pages, year }])
+      .insert([{ title, author, pages, year, photos }])
       .select()
       .single();
     if (error) throw error;
@@ -313,11 +314,12 @@ app.delete('/books/:id', authMiddleware, async (req: Request<{ id: string }>, re
 app.put('/books/:id', authMiddleware, async (req: Request<{ id: string }, {}, Partial<Book>>, res: Response) => {
   try {
     const { id } = req.params;
-    const { title, author, pages, year } = req.body;
+    const { title, author, pages, year, photos } = req.body;
     const updateData: Partial<Book> = {};
 
     if (title !== undefined) updateData.title = title;
     if (author !== undefined) updateData.author = author;
+    if (photos !== undefined) updateData.photos = photos
 
     if (pages !== undefined) {
       if (pages < 1) return res.status(400).json({ error: 'Invalid pages' });

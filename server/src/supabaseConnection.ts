@@ -16,15 +16,15 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
 interface Database {
   public: {
     Tables: {
-      users: {
-        Row: { id: string; name: string; email: string };
-        Insert: { name: string; email: string };
-        Update: { name?: string; email?: string };
-      };
+    //   users: {
+    //     Row: { id: string; name: string; email: string };
+    //     Insert: { name: string; email: string };
+    //     Update: { name?: string; email?: string };
+    //   };
       books: {
-        Row: { id: string; title: string; author: string; pages: number; year: number };
-        Insert: { title: string; author: string; pages: number; year: number };
-        Update: { title?: string; author?: string; pages?: number; year?: number };
+        Row: { id: string; title: string; author: string; pages: number; year: number; photos: string };
+        Insert: { title: string; author: string; pages: number; year: number; photos: string };
+        Update: { title?: string; author?: string; pages?: number; year?: number; photos: string };
       };
     };
   };
