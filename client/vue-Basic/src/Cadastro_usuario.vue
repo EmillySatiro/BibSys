@@ -12,7 +12,7 @@ const popupType = ref('') // 'error' ou 'success'
 const showPopup = ref(false)
 
 function irParaHome() {
-  if(email.value && senha.value && senhaConfirm.value){
+  if (email.value && senha.value && senhaConfirm.value) {
     popupMessage.value = 'Cadastro realizado com sucesso!'
     popupType.value = 'success'
     showPopup.value = true
@@ -24,7 +24,7 @@ function irParaHome() {
     popupMessage.value = 'Preencha todos os campos!'
     popupType.value = 'error'
     showPopup.value = true
-    setTimeout(() => showPopup.value = false, 1500)
+    setTimeout(() => (showPopup.value = false), 1500)
   }
 }
 </script>
@@ -32,67 +32,61 @@ function irParaHome() {
 <template>
   <div class="pagina">
     <div class="fundo-verde"></div>
-    <div class="bloco-preto">
 
+    <div class="bloco-preto">
+      <!-- Área de formulário -->
       <div class="bloco-cinza">
         <h1 class="titulo">Sign Up</h1>
 
         <!-- Email -->
-        <div class="campo-login" style="top:130px;">
-          <input type="text" v-model="email" placeholder="Digite seu e-mail"/>
-          <div class="icon email-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <image href="/Pngs/mdi_email.ico" width="40" height="40"/>
-            </svg>
+        <div class="campo-login">
+          <input type="text" v-model="email" placeholder="Digite seu e-mail" />
+          <div class="icon">
+            <img src="/Pngs/mdi_email.ico" alt="email" />
           </div>
-          <div class="linha email-line"></div>
+          <div class="linha"></div>
         </div>
 
         <!-- Senha -->
-        <div class="campo-login" style="top:250px;">
-          <input type="password" v-model="senha" placeholder="Digite sua senha"/>
-          <div class="icon lock-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <image href="/Pngs/bi_lock-fill.ico" width="40" height="40"/>
-            </svg>
+        <div class="campo-login">
+          <input type="password" v-model="senha" placeholder="Digite sua senha" />
+          <div class="icon">
+            <img src="/Pngs/bi_lock-fill.ico" alt="senha" />
           </div>
-          <div class="linha password-line"></div>
+          <div class="linha"></div>
         </div>
 
         <!-- Confirmar senha -->
-        <div class="campo-login" style="top:370px;">
-          <input type="password" v-model="senhaConfirm" placeholder="Confirme sua senha"/>
-          <div class="icon Confirmlock-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-              <image href="/Pngs/bi_lock-fill.ico" width="40" height="40"/>
-            </svg>
+        <div class="campo-login">
+          <input type="password" v-model="senhaConfirm" placeholder="Confirme sua senha" />
+          <div class="icon">
+            <img src="/Pngs/bi_lock-fill.ico" alt="confirmar senha" />
           </div>
-          <div class="linha Confirmpassword-line"></div>
+          <div class="linha"></div>
         </div>
 
-          <!-- Botão Sign Up -->
-          <div class="login-button" @click="irParaHome" style="top: 430px; left: 230px;">Sign Up</div>
+        <!-- Botão -->
+        <div class="login-button" @click="irParaHome">Sign Up</div>
 
-    <p class="signup-text">
-      Já tem login? <span class="highlight" @click="router.push('/')">Clique aqui</span> para voltar
-    </p>
-
-
+        <p class="signup-text">
+          Já tem login?
+          <span class="highlight" @click="router.push('/')">Clique aqui</span>
+          para voltar
+        </p>
       </div>
 
+      <!-- Área do logo -->
       <div class="logo-area">
         <div class="svg-container">
-          <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
-            <image href="/favicon.ico" width="292.607" height="255.13"/>
-          </svg>
+          <img src="/favicon.ico" alt="logo" />
         </div>
         <h2 class="marca">BibSys</h2>
       </div>
 
+      <!-- Popup -->
       <div v-if="showPopup" :class="['popup', popupType]">
         {{ popupMessage }}
       </div>
-
     </div>
   </div>
 </template>
@@ -100,20 +94,23 @@ function irParaHome() {
 <style scoped>
 :global(html, body, #app) {
   margin: 0;
+  padding: 0;
   height: 100%;
-  overflow: hidden;
   background: #021A1A;
+  font-family: Tektur;
 }
 
 .pagina {
-  width: 1512px;
-  height: 982px;
+  width: 100%;
+  min-height: 100vh;
   position: relative;
-  font-family: 'Tektur', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fundo-verde {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background: #021A1A;
@@ -121,36 +118,110 @@ function irParaHome() {
 }
 
 .bloco-preto {
-  width: 1455px;
-  height: 895px;
+  width: 95%;
+  max-width: 1455px;
   background: #000;
-  position: absolute;
-  margin: auto;
-  top: calc((982px - 895px)/2);
-  left: calc((1512px - 1455px)/2);
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  position: relative;
   z-index: 1;
+  flex-wrap: wrap;
 }
 
+/* Caixa cinza */
 .bloco-cinza {
-  position: relative; 
-  width: 780px;
-  height: 514.896px;
-  top: 120px;
-  left: 88px;
+  flex: 1 1 450px;
+  max-width: 700px;
   background: rgba(185, 185, 185, 0.22);
   border: 2px solid #F1F7F7;
-  box-sizing: border-box;
-  padding: 24px;
-  z-index: 2;
+  padding: 40px 24px;
+  border-radius: 12px;
+  position: relative;
+  color: #fff;
 }
 
-/* Texto de cadastro/voltar */
-.signup-text {
+.titulo {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family:Tektur;
+  
+}
+
+.campo-login {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 32px auto;
+  font-family:Tektur;
+  width: 80%;
+}
+
+.campo-login input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family:Tektur;
+  font-size: 20px;
+  color: #FFF;
+  padding: 8px 40px 8px 0;
+}
+
+.campo-login .linha {
   position: absolute;
-  bottom: 24px;
-  top: 5px;
-  left: 20px; /* alinhamento dentro da caixa cinza */
-  font-size: 10px;
+  
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #FFF;
+}
+
+.campo-login .icon {
+  position: absolute;
+  right: 0;
+}
+
+.campo-login .icon img {
+  width: 32px;
+  height: 32px;
+}
+
+/* Botão */
+.login-button {
+  margin: 40px auto;
+  width: 80%;
+  max-width: 400px;
+  height: 65px;
+  background-color: #F1F7F7;
+  color: #0b0b0b;
+  font-size: 28px;
+  font-weight: 600;
+   font-family:Tektur;
+  text-align: center;
+  line-height: 65px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background-color: #2CC295;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(44, 194, 149, 0.4);
+}
+
+/* Texto voltar */
+.signup-text {
+  text-align: center;
+   font-family:Tektur;
+  font-size: 14px;
   color: #FFF;
 }
 
@@ -160,111 +231,38 @@ function irParaHome() {
   cursor: pointer;
 }
 
-.titulo {
-  position: absolute;
-  top: 32px;
-  left: 290px;
-  font-size: 64px;
-  font-weight: 400;
-  color: #FFF;
-  margin: 0;
-}
-
-.campo-login {
-  position: absolute;
-  left: 125px;
-  width: 514px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.campo-login input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 20px;
-  color: #FFF;
-  padding: 8px 0;
-}
-
-.campo-login .linha {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: #FFF;
-}
-
-.campo-login .icon svg {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-
-/* Botão login */
-.login-button {
-  position: absolute;
-  top: 390px;
-  left: 230px;
-  width: 344px;
-  height: 65px;
-  background-color: #F1F7F7;
-  color: #0b0b0b;
-  font-size: 36px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 65px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.3s;
-}
-
-
-
-.login-button:hover {
-  background-color: #2CC295;
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 8px 15px rgba(44, 194, 149, 0.4);
-}
-
-
+/* Logo */
 .logo-area {
-  position: absolute;
-  top: 200px;
-  left: 1000px;
-  z-index: 2;
+  flex: 1 1 300px;
+  text-align: center;
+  margin-top: 40px;
 }
 
-.svg-container {
-  width: 272.607px;
-  height: 225.13px;
+.svg-container img {
+  max-width: 260px;
   filter: drop-shadow(0 0 20px #2CC295);
 }
 
 .marca {
   color: #F1F7F7;
-  font-size: 128px;
-  font-family: 'Stick No Bills', sans-serif;
+  font-size: clamp(48px, 8vw, 128px);
+  font-family: 'Stick No Bills';
   font-weight: 400;
   text-shadow: 0 0 8px #2CC295;
-  margin: 0;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
+/* Popup */
 .popup {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 320px;
+  min-width: 280px;
   padding: 20px 40px;
   border-radius: 15px;
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: #fff;
   z-index: 999;
@@ -283,7 +281,27 @@ function irParaHome() {
 }
 
 @keyframes popupAnim {
-  0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  0% {
+    transform: translate(-50%, -60%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .bloco-preto {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bloco-cinza {
+    width: 100%;
+    margin-bottom: 40px;
+  }
 }
 </style>
