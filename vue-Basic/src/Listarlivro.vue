@@ -1,10 +1,13 @@
 <template>
   <div class="tela">
-    <!-- LOGO -->
-    <div class="logo">BibSys</div>
+    <!-- HEADER COM LOGO -->
+    <div class="header-logo">
+      <img src="/favicon.ico" alt="Logo BibSys" class="logo-img"/>
+      <div class="logo-text">BibSys</div>
+    </div>
 
     <!-- TÍTULO SECUNDÁRIO -->
-    <div class="titulo-sec">Navege pelos livros a baixo</div>
+    <div class="titulo-sec">Navegue pelos livros abaixo</div>
 
     <!-- CAIXA VERDE COM SCROLL -->
     <div class="caixa-verde">
@@ -14,6 +17,7 @@
           v-for="(livro, index) in livros"
           :key="index"
           :style="getPos(index)"
+          @click="abrirLivro(livro)"
         >
           <div class="livro-fundo"></div>
           <img class="livro-img" :src="livro.img" :alt="livro.nome" />
@@ -21,16 +25,16 @@
         </div>
       </div>
     </div>
-    <div class="caixa-rodape">
-        <!-- SLOGAN -->
-        <div class="slogan">
-        Deixe sua sede de conhecimento levá-lo além das estrelas.
-        </div>
 
-        <!-- BOTÃO VOLTAR PARA HOME -->
-        <div class="voltar-home" @click="$router && $router.push('/home')">
+    <!-- RODAPÉ -->
+    <div class="caixa-rodape">
+      <div class="slogan">
+        Deixe sua sede de conhecimento levá-lo além das estrelas.
+      </div>
+
+      <div class="voltar-home" @click="$router && $router.push('/home')">
         Voltar para Home
-        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +46,7 @@ export default {
     livros: {
       type: Array,
       required: true,
-      default: () =>[
+      default: () => [
         { nome: "Carmilla", img: "https://i.pinimg.com/originals/97/5e/a2/975ea2ac189028a6d7feac374ae36181.jpg" },
         { nome: "1984", img: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg" },
         { nome: "Dom Quixote", img: "https://images-na.ssl-images-amazon.com/images/I/81vpsIs58WL.jpg" },
@@ -55,166 +59,185 @@ export default {
         { nome: "O Grande Gatsby", img: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" },
         { nome: "Moby Dick", img: "https://images-na.ssl-images-amazon.com/images/I/71HMyqG6MRL.jpg" },
         { nome: "Orgulho e Preconceito", img: "https://th.bing.com/th/id/OIP.RyanQ3hxUlT68wRcaH37LgHaKd?w=194&h=274&c=7&r=0&o=7&pid=1.7&rm=3" }
-
-        ]
-    },
+      ]
+    }
   },
   data() {
     return {
-      caixaBase: { largura: 165, altura: 226, gapX: 64, gapY: 76 }, // gapX maior para afastar horizontalmente
-      aumentoAltura: 30, // só aumenta verticalmente
+      caixaBase: { largura: 165, altura: 226, gapX: 64, gapY: 76 },
+      aumentoAltura: 30,
     };
   },
   methods: {
     getPos(index) {
       const totalAltura = this.caixaBase.altura + this.aumentoAltura;
-      const col = index % 4; // 4 por linha
+      const col = index % 4;
       const row = Math.floor(index / 4);
-      const left = 131 + col * (this.caixaBase.largura + this.caixaBase.gapX); // largura fixa, apenas gapX aumenta
+      const left = 131 + col * (this.caixaBase.largura + this.caixaBase.gapX);
       const top = 42 + row * (totalAltura + this.caixaBase.gapY);
       return { left: left + "px", top: top + "px" };
     },
-  },
+    abrirLivro(livro) {
+      this.$router.push({ name: "Livro", query: { nome: livro.nome, img: livro.img } });
+    }
+  }
 };
 </script>
 
 <style scoped>
-/* TELA COM SCROLL */
 .tela {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: black;
-  padding: 30px; /* 40-10 */
+  background: linear-gradient(180deg, #000022 0%, #021A1A 100%);
+  padding: 30px;
   box-sizing: border-box;
   font-family: "Tektur", sans-serif;
-  overflow-y: auto; /* scroll na tela inteira */
+  overflow-y: auto;
+  color: white;
+  background-image: url('/Pngs/fundo-estrelas.ico');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* LOGO */
-.logo {
+/* HEADER COM LOGO NORMAL */
+.header-logo {
   position: absolute;
-  top: 20px; 
-  left: 160px; 
-  color: white;
-  font-size: 98px; /* 128-30 */
+  top: 20px;
+  left: 160px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.logo-text {
+  color: #2CC295;
+  font-size: 98px;
   font-family: "Stick No Bills", sans-serif;
   font-weight: 400;
 }
-.caixa-rodape {
-  width: 1200px;
-  height: 55px;
-  position: absolute;
-  left: 160px;
-  top: 660px;
-  background: #111;
-  border: 2px solid #F1F7F7;
-  z-index: 2;
-}
-/* BOTÃO VOLTAR PARA HOME */
-.voltar-home {
-  position: absolute;
-  left: 800px;
-  top: 3px;
-  width: fit-content;
-  padding: 5px 60px; /* 10-30 = -? ajustado */
-  background-color: #F1F7F7;
-  color: #021A1A;
-  font-size: 30px; /* 40-10 */
-  border-radius: 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: 0.2s;
-}
 
-.voltar-home:hover {
-  transform: scale(1.05);
-}
-/* SLOGAN */
-.slogan {
-  position: absolute;
-  left: 50px;
-  top: 10px;
-  color: #2CC295;
-  font-size: 20px; /* 24-10 */
-}
-
-/* Título secundário */
+/* TÍTULO SECUNDÁRIO */
 .titulo-sec {
   position: absolute;
-  top: 80px; /* 90-30 */
-  left: 840px; /* 756-30 */
+  top: 130px;
+  left: 160px;
   color: #F1F7F7;
-  font-size: 25px; 
+  font-size: 28px;
 }
 
 /* CAIXA VERDE */
 .caixa-verde {
   position: absolute;
-  top: 160px; /* 190-30 */
-  left: 160px; /* 150-30 */
+  top: 180px;
+  left: 160px;
   width: 1212px;
   height: 480px; 
-  background-color: #021A1A;
-  overflow-y: auto; /* scroll vertical */
-  border-radius: 4px;
-}
-
-/* CONTAINER INTERNO PARA LIVROS */
-.livros-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 30px; /* evita 30px sobrando */
-  min-height: 100%;
+  background: rgba(2, 26, 26, 0.85);
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #2CC295;
 }
 
 /* LIVRO BOX */
+.livros-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 30px;
+  min-height: 100%;
+}
 
 .livro-box {
   position: absolute;
-  width: 165px; /* largura fixa */
-  height: 256px; /* 226 + 30 */
-  transition: transform 0.2s; /* animação suave */
-  cursor: pointer; /* indica interatividade */
+  width: 165px;
+  height: 256px;
+  transition: transform 0.2s, box-shadow 0.3s;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .livro-box:hover {
-  transform: scale(1.05); /* zoom leve ao passar o mouse */
-  z-index: 10; /* garante que fique sobre os outros */
+  transform: scale(1.1);
+  box-shadow: 0 12px 25px rgba(44, 194, 149, 0.6);
+  z-index: 10;
 }
 
-
-/* FUNDO TRANSLÚCIDO */
 .livro-fundo {
   position: absolute;
   width: 165px;
   height: 256px;
-  background: rgba(185, 185, 185, 0.22);
-  border: 2px #F1F7F7 solid;
+  background: rgba(185, 185, 185, 0.15);
+  border: 2px #2CC295 solid;
   top: 0;
   left: 0;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* IMAGEM DO LIVRO */
 .livro-img {
   position: absolute;
   width: 117px;
   height: 204px;
-  top: 26px; /* proporcional ao aumento */
+  top: 26px;
   left: 24px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-/* NOME DO LIVRO */
 .livro-nome {
   position: absolute;
-  top: 260px; /* ajustado conforme altura */
+  top: 260px;
   left: 10px;
-  color: white;
-  font-size: 14px;
+  width: 145px;
   text-align: center;
+  font-weight: 600;
+  color: #2CC295;
+  font-size: 14px;
+}
+
+/* RODAPÉ */
+.caixa-rodape {
+  width: 1200px;
+  height: 55px;
+  position: absolute;
+  left: 160px;
+  top: 680px;
+  background: rgba(2, 26, 26, 0.85);
+  border: 2px solid #2CC295;
+  border-radius: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+.slogan {
+  color: #2CC295;
+  font-size: 20px;
+}
+
+.voltar-home {
+  padding: 5px 60px;
+  background-color: #F1F7F7; /* branco de base */
+  color: #021A1A; /* texto escuro */
+  font-size: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
+  font-weight: 600;
+}
+
+.voltar-home:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(44,194,149,0.6);
+  background-color: #2CC295; /* muda para verde só no hover */
+  color: white;
 }
 
 </style>
