@@ -5,6 +5,7 @@ import Home from './Home.vue'
 import Cadastrarlivro from './Cadastrarlivro.vue'
 import Editarlivro from './Editarlivro.vue'
 import Livro from './Livro.vue'
+import Listarlivro from './Listarlivro.vue'
 
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: '/livro',
     name: 'Livro',
     component: Livro
+  },
+  {
+  path: '/listarlivro',
+  name: 'ListarLivro',
+  component: Listarlivro
   }
 ]
 

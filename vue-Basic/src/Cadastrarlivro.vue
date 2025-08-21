@@ -36,14 +36,14 @@
       <div class="label autor">Autor principal</div>
       <div class="label ano">Ano de publicação</div>
       <div class="label paginas">Quantidade de páginas</div>
-      <div class="label descricao">Descrição do livro</div>
+      <div class="label descricao">Informe URL da imagem</div>
 
       <!-- Placeholders -->
       <div class="placeholder titulo">Digite o título do livro</div>
       <div class="placeholder autor">Digite o nome do autor</div>
       <div class="placeholder ano">DD/MM/AAAA</div>
       <div class="placeholder paginas">Digite a quantidade de páginas</div>
-      <div class="placeholder descricao">Digite a descrição do livro</div>
+      <div class="placeholder descricao">Informe URL da imagem </div>
 
       <!-- Texto e títulos -->
       <div class="titulo-principal">BibSys</div>
@@ -57,8 +57,8 @@
       
 
       <div class="descricao-formulario">
-        <span class="highlight">Complete</span>
-        <span> o formulário ao lado com as informações do livro que deseja cadastrar e </span>
+        <span class="highlight">Informe</span>
+        <span> o URL do livro que deseja cadastrar e </span>
         <span class="highlight">clique</span>
         <span> em </span>
         <span class="highlight">Cadastrar</span>
@@ -120,8 +120,6 @@ html, body {
   z-index: 1;
 }
 
-
-
 /* SVG decorativo */
 .svg-container {
   position: absolute;
@@ -137,7 +135,7 @@ html, body {
   height: 858px;
   position: absolute;
   left: 71px;
-  top: 0px;
+  top: -50px;
   background: #021A1A;
   border: 2px solid #021A1A;
   z-index: 1;
@@ -196,9 +194,9 @@ html, body {
   z-index: 2;
 }
 .input-bg.titulo { left: 112px; top: 337px; width: 469px; height: 46px; }
-.input-bg.autor { left: 112px; top: 450px; width: 471px; height: 46px; }
-.input-bg.ano { left: 123px; top: 553px; width: 194px; height: 46px; }
-.input-bg.paginas { left: 110px; top: 654px; width: 375px; height: 46px; }
+.input-bg.autor { left: 112px; top: 450px; width: 469px; height: 46px; }
+.input-bg.ano { left: 112px; top: 553px; width: 469px; height: 46px; }
+.input-bg.paginas { left: 112px; top: 654px; width: 469px; height: 46px; }
 .input-bg.descricao { left: 818px; top: 348px; width: 469px; height: 234px; }
 
 /* Labels */
@@ -243,7 +241,7 @@ html, body {
 .descricao-formulario {
   position: absolute;
   left: 840px;
-  top: 596px;
+  top: 620px;
   width: 416px;
   text-align: center;
   font-size: 24px;

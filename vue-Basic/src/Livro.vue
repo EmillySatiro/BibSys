@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function irParaCadastrar() {
-  router.push('/cadastrarlivro')
+  router.push('/editarlivro')
 }
 
 </script>
@@ -16,8 +16,6 @@ function irParaCadastrar() {
     <!-- Caixa principal translúcida -->
     <div class="bloco-cinza"></div>
     
-    <!-- Título marca -->
-    <div class="marca">BibSys</div>
      <div class="svg-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
           <image href="/favicon.ico" width="292.607" height="255.13"/>
@@ -27,13 +25,16 @@ function irParaCadastrar() {
     <!-- Boas-vindas -->
     <div class="Titulo">Carmilla !!</div>
 
+  <div class="caixa-imagem">
+    <img src="/Pngs/Carmilla.ico" alt="Pré-visualização" />
+  </div>
+
   <!-- Botões de ação -->
   <div class="botao botao-cadastrar" @click="irParaCadastrar"></div>
   <div class="botao botao-listar"></div>
 
   <div class="texto-cadastrar"@click="irParaCadastrar">Edite livro</div>
   <div class="texto-listar">Excluir livros</div>
-    
 
     <!-- Texto motivacional -->
     <div class="autor"> Autor: Joseph Sheridan Le Fanu</div>
@@ -62,6 +63,22 @@ function irParaCadastrar() {
   position: relative;
 }
 
+.caixa-imagem {
+  position: absolute;
+  top: 160px;    /* distância do topo */
+  left: 850px;   /* distância da esquerda */
+  width: 260px;  /* tamanho fixo */
+  height: 390px; /* tamanho fixo */
+  border: 2px solid #555;
+  border-radius: 12px;
+  overflow: hidden; /* corta qualquer sobra */
+}
+
+.caixa-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* mantém proporção e cobre toda a caixa */
+}
 
 /* Barra lateral */
 .barra-lateral {
@@ -87,22 +104,9 @@ function irParaCadastrar() {
 .svg-container {
   position: absolute;
   top: 200px;
-  left: 120px;
+  left: 160px;
   width: 292.607px;
   height: 255.13px;
-}
-
-/* Marca BibSys */
-.marca {
-  width: 321px;
-  height: 159px;
-  left: 140px;
-  top: 480px;
-  position: absolute;
-  color: white;
-  font-size: 128px;
-  font-family: 'Stick No Bills', sans-serif;
-  font-weight: 400;
 }
 
 /* Boas-vindas */
@@ -128,44 +132,41 @@ function irParaCadastrar() {
 }
 
 .botao-cadastrar { 
-  left: 230px; 
-  top: 200px ; 
+  left: 150px; 
+  top: 500px ; 
   cursor: pointer;
   }
-.botao-listar { left: 230px; top: 300px; }
+.botao-listar { left: 150px; top: 600px; }
 
 /* Textos dos botões */
 .texto-cadastrar {
   cursor: pointer;
   width: 302px;
   height: 52px;
-  left: 240px;
-  top: 200px;
+  left: 200px; 
+  top: 500px ;
   position: absolute;
   color: #021A1A;
   font-size: 40px;
   font-family: Tektur, sans-serif;
   font-weight: 400;
 }
-
 .texto-listar {
   width: 249px;
   height: 52px;
-  left: 265px;
-  top: 300px;
+  left: 180px; 
+  top: 600px;
   position: absolute;
   color: #021A1A;
   font-size: 40px;
   font-family: Tektur, sans-serif;
   font-weight: 400;
 }
-
-
 .autor {
   width: 300px;
   height: 60px;
   left: 830px; 
-  top: 620px;
+  top: 660px;
   position: absolute;
   text-align: center;
   color: #F1F7F7;
@@ -178,7 +179,7 @@ function irParaCadastrar() {
   width: 300px;
   height: 60px;
   left: 830px; 
-  top: 590px;
+  top: 628px;
   position: absolute;
   text-align: center;
   color: #F1F7F7;
@@ -190,7 +191,7 @@ function irParaCadastrar() {
   width: 300px;
   height: 60px;
   left: 830px; 
-  top: 550px;
+  top: 590px;
   position: absolute;
   text-align: center;
   color: #F1F7F7;
