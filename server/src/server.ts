@@ -203,4 +203,3 @@ app.put('/book/:id', async (req: Request<{ id: string }, {}, Partial<Book>>, res
 
 
 export const handler = serverless(app)
-export default app
