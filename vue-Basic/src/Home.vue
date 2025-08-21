@@ -149,12 +149,11 @@ function irParaListar() {
   z-index: 10;
 }
 
-/* Botões */
 .botao {
   width: 301px;
   height: 56px;
   position: absolute;
-  background: white;
+  background: #F1F7F7; /* branco de base */
   border: 2px solid black;
   border-radius: 8px;
   font-family: Tektur, sans-serif;
@@ -165,6 +164,7 @@ function irParaListar() {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  color: #021A1A; /* texto escuro */
 }
 
 .botao:hover {
@@ -174,10 +174,12 @@ function irParaListar() {
   box-shadow: 0 0 10px #2CC295, 0 0 20px #2CC295;
 }
 
+
 .botao-cadastrar { 
   left: 830px; 
   top: 200px; 
 }
+
 .botao-listar {   
   left: 830px; 
   top: 300px;

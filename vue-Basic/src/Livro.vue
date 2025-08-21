@@ -1,47 +1,85 @@
-
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
+
+const livro = ref({
+  nome: "",
+  autor: "",
+  ano: null,
+  paginas: null,
+  img: ""
+})
+
+onMounted(() => {
+  // Recebe dados do livro via query params
+  if (route.query.nome) livro.value.nome = route.query.nome
+  if (route.query.img) livro.value.img = route.query.img
+  if (route.query.autor) livro.value.autor = route.query.autor
+  if (route.query.ano) livro.value.ano = route.query.ano
+  if (route.query.paginas) livro.value.paginas = route.query.paginas
+})
 
 function irParaCadastrar() {
   router.push('/editarlivro')
 }
 
+function irParaExcluir() {
+  const sucesso = Math.random() > 0.2
+  if (sucesso) {
+    alert("Livro excluído com sucesso!")
+    router.push('/listarlivro')
+  } else {
+    alert("Falha ao excluir o livro!")
+  }
+}
 </script>
 
 <template>
   <div class="pagina">
 
-    <!-- Caixa principal translúcida -->
-    <div class="bloco-cinza"></div>
-    
-     <div class="svg-container">
-        <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
-          <image href="/favicon.ico" width="292.607" height="255.13"/>
-        </svg>
+    <!-- Logo -->
+    <div class="logo">
+      <img src="/favicon.ico" alt="Logo BibSys" />
+      <span>BibSys</span>
+    </div>
+
+    <!-- Link voltar -->
+    <div class="voltar-lista" @click="$router.push('/listarlivro')">
+      ← Voltar para a lista
+    </div>
+
+    <!-- Caixa principal -->
+    <div class="caixa-principal">
+
+      <!-- Imagem do livro -->
+      <div class="caixa-imagem">
+        <img :src="livro.img" alt="Capa do livro" />
       </div>
 
-    <!-- Boas-vindas -->
-    <div class="Titulo">Carmilla !!</div>
+      <!-- Conteúdo textual -->
+      <div class="conteudo">
+        <div class="titulo-livro">{{ livro.nome }}</div>
+        <div class="autor">Autor: {{ livro.autor || 'Desconhecido' }}</div>
+        <div class="ano">Ano: {{ livro.ano || '-' }}</div>
+        <div class="paginas">Páginas: {{ livro.paginas || '-' }}</div>
 
-  <div class="caixa-imagem">
-    <img src="/Pngs/Carmilla.ico" alt="Pré-visualização" />
-  </div>
+        <!-- Botões -->
+        <div class="botoes">
+          <div class="botao botao-editar" @click="irParaCadastrar">Editar Livro</div>
+          <div class="botao botao-excluir" @click="irParaExcluir">Excluir Livro</div>
+        </div>
+      </div>
 
-  <!-- Botões de ação -->
-  <div class="botao botao-cadastrar" @click="irParaCadastrar"></div>
-  <div class="botao botao-listar"></div>
-
-  <div class="texto-cadastrar"@click="irParaCadastrar">Edite livro</div>
-  <div class="texto-listar">Excluir livros</div>
+    </div>
 
     <!-- Texto motivacional -->
-    <div class="autor"> Autor: Joseph Sheridan Le Fanu</div>
-    <div class="ano"> Ano de publicação: 1872 </div>
-    <div class="Numeropg"> Número de página: 176 </div>
+    <div class="texto-motivacional">
+      Deixe sua <span class="destaque">sede</span> de <span class="destaque">conhecimento</span> levá-lo além das <span class="destaque">estrelas</span>.
+    </div>
 
-   
   </div>
 </template>
 
@@ -49,154 +87,146 @@ function irParaCadastrar() {
 :global(html, body, #app) {
   margin: 0;
   height: 100%;
-  overflow: hidden;
-  background: black;
+  font-family: Tektur, sans-serif;
+  background-color: black;
+  color: #F1F7F7;
 }
 
+/* Página */
 .pagina {
   width: 100vw;
-  height: 100vh;
-  background: #000000ff; /* cor de fundo escura */
+  min-height: 100vh;
+  padding-top: 120px; /* um pouco mais para baixo */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   position: relative;
 }
-
-.caixa-imagem {
+/* Link voltar */
+.voltar-lista {
   position: absolute;
-  top: 160px;    /* distância do topo */
-  left: 850px;   /* distância da esquerda */
-  width: 260px;  /* tamanho fixo */
-  height: 390px; /* tamanho fixo */
-  border: 2px solid #555;
+  top: 40px;
+  right: 50px;
+  color: #2CC295;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s, transform 0.2s;
+}
+.voltar-lista:hover {
+  color: #F1F7F7;
+  transform: translateX(-4px);
+}
+/* Caixa principal */
+.caixa-principal {
+  display: flex;
+  gap: 40px;
+  background: rgba(30,30,30,0.55);
+  border: 2px solid #2CC295;
   border-radius: 12px;
-  overflow: hidden; /* corta qualquer sobra */
+  padding: 40px;
+  max-width: 1000px;
+  width: 90%;
+  box-shadow: 0 0 25px rgba(44,194,149,0.4);
+  margin-top: 30px;
 }
 
+/* Logo */
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo img { width: 60px; height: 60px; }
+.logo span {
+  font-size: 48px;
+  font-family: 'Stick No Bills', sans-serif;
+  color: #2CC295;
+}
+
+/* Imagem do livro */
+.caixa-imagem {
+  width: 260px;
+  height: 390px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #2CC295;
+  box-shadow: 0 0 20px rgba(44,194,149,0.3);
+  flex-shrink: 0;
+}
 .caixa-imagem img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* mantém proporção e cobre toda a caixa */
+  object-fit: cover;
+  transition: transform 0.3s;
 }
+.caixa-imagem img:hover { transform: scale(1.05); }
 
-/* Barra lateral */
-.barra-lateral {
-  width: 72px;
-  height: 505px;
-  left: 1377.23px;
-  top: -13px;
-  position: absolute;
-  background: #F1F7F7;
+/* Conteúdo textual */
+.conteudo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  word-wrap: break-word;
 }
-
-/* Caixa translúcida principal */
-.bloco-cinza {
-  width: 619px;
-  height: 662px;
-  left: 671px;
-  top: 60px;
-  position: absolute;
-  background: rgba(185, 185, 185, 0.22);
-  border: 2px solid #F1F7F7;
-}
-
-.svg-container {
-  position: absolute;
-  top: 200px;
-  left: 160px;
-  width: 292.607px;
-  height: 255.13px;
-}
-
-/* Boas-vindas */
-.Titulo {
-  width: 449px;
-  height: 52px;
-  left: 889px;
-  top: 83px;
-  position: absolute;
+.titulo-livro {
+  font-size: 32px;
   color: #F1F7F7;
-  font-size: 40px;
-  font-family: Tektur, sans-serif;
   font-weight: 400;
+  line-height: 1.3;
+  word-break: break-word; /* para títulos longos */
+}
+.autor, .ano, .paginas {
+  font-size: 18px;
+  color: #ccc;
+  word-break: break-word; /* evita overflow */
 }
 
 /* Botões */
+.botoes {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
 .botao {
-  width: 301px;
-  height: 56px;
-  position: absolute;
-  background: #F1F7F7;
-  border: 2px solid black;
-}
-
-.botao-cadastrar { 
-  left: 150px; 
-  top: 500px ; 
+  padding: 12px 40px;
+  border-radius: 8px;
   cursor: pointer;
-  }
-.botao-listar { left: 150px; top: 600px; }
-
-/* Textos dos botões */
-.texto-cadastrar {
-  cursor: pointer;
-  width: 302px;
-  height: 52px;
-  left: 200px; 
-  top: 500px ;
-  position: absolute;
-  color: #021A1A;
-  font-size: 40px;
-  font-family: Tektur, sans-serif;
-  font-weight: 400;
-}
-.texto-listar {
-  width: 249px;
-  height: 52px;
-  left: 180px; 
-  top: 600px;
-  position: absolute;
-  color: #021A1A;
-  font-size: 40px;
-  font-family: Tektur, sans-serif;
-  font-weight: 400;
-}
-.autor {
-  width: 300px;
-  height: 60px;
-  left: 830px; 
-  top: 660px;
-  position: absolute;
+  font-weight: 600;
   text-align: center;
-  color: #F1F7F7;
-  font-size: 18px;
-  font-family: Tektur, sans-serif;
-  font-weight: 400;
+  user-select: none;
+  transition: 0.2s;
+}
+.botao-editar {
+  background-color: #F1F7F7;
+  color: #021A1A;
+}
+.botao-editar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(44,194,149,0.4);
+  background-color: #2CC295;
+  color: white;
+}
+.botao-excluir {
+  background-color: #FF4C4C;
+  color: white;
+}
+.botao-excluir:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,76,76,0.4);
+  background-color: #FF1A1A;
 }
 
-.ano {
-  width: 300px;
-  height: 60px;
-  left: 830px; 
-  top: 628px;
-  position: absolute;
+/* Texto motivacional */
+.texto-motivacional {
+  margin-top: 30px;
+  font-size: 24px;
   text-align: center;
   color: #F1F7F7;
-  font-size: 18px;
-  font-family: Tektur, sans-serif;
-  font-weight: 400;
 }
-.Numeropg {
-  width: 300px;
-  height: 60px;
-  left: 830px; 
-  top: 590px;
-  position: absolute;
-  text-align: center;
-  color: #F1F7F7;
-  font-size: 18px;
-  font-family: Tektur, sans-serif;
-  font-weight: 400;
-}
+.destaque { color: #2CC295; font-weight: 600; }
 </style>

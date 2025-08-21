@@ -85,7 +85,7 @@ const showPopup = ref(false)
 
 function cadastrarLivro() {
   if(titulo.value && autor.value && ano.value && paginas.value && descricao.value){
-    popupMessage.value = 'Livro cadastrado com sucesso!'
+    popupMessage.value = 'Livro  com sucesso!'
     popupType.value = 'success'
     showPopup.value = true
     setTimeout(() => {
