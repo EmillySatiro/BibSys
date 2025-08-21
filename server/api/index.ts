@@ -1,2 +1,2 @@
-import { handler } from "../dist/server.js";
+import { handler } from "../src/server";
 export default handler;
