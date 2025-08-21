@@ -17,7 +17,7 @@ yarn-error.log*
 Thumbs.db
 
 # Editor
-.vscode/
+*/.vscode/
 .idea/
 
 # Optional: arquivos temporários
