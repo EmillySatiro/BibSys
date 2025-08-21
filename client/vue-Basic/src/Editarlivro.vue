@@ -55,7 +55,7 @@
 			/>
 
 			<!-- Botões -->
-			<div class="botao-cadastrar" @click="cadastrarLivro">Editar livro</div>
+			<div class="botao-cadastrar" @click="editarLivro">Editar livro</div>
 			<p class="signup-text">
 				Quer voltar a Home?
 				<span class="highlight" @click="voltarHome">Clique aqui</span> .
@@ -105,6 +105,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { apiRoutes } from "@/assets/rotas";
+import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
 
@@ -118,7 +121,7 @@ const popupMessage = ref("");
 const popupType = ref("");
 const showPopup = ref(false);
 
-function cadastrarLivro() {
+async function editarLivro() {
 	if (
 		titulo.value &&
 		autor.value &&
@@ -126,18 +129,43 @@ function cadastrarLivro() {
 		paginas.value &&
 		descricao.value
 	) {
-		popupMessage.value = "Livro  com sucesso!";
-		popupType.value = "success";
-		showPopup.value = true;
-		setTimeout(() => {
-			showPopup.value = false;
-			router.push({ name: "Home" }); // volta para home
-		}, 1500);
+		try {
+			await apiRequest(apiRoutes.books.base, router, {
+				method: "PUT",
+				body: {
+					title: titulo.value,
+					author: autor.value,
+					year: parseInt(ano.value),
+					pages: parseInt(paginas.value),
+					photos: descricao.value,
+				},
+			});
+			showMessage({
+				text: "Livro editado com sucesso!",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			voltarHome();
+		} catch (error) {
+			console.error(error);
+			showMessage({
+				text: "Erro ao editar livro!",
+				type: "error",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			console.log(error);
+		}
 	} else {
-		popupMessage.value = "Preencha todos os campos!";
-		popupType.value = "error";
-		showPopup.value = true;
-		setTimeout(() => (showPopup.value = false), 1500);
+		showMessage({
+			text: "Preencha todos os campos!",
+			type: "error",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
 	}
 }
 

@@ -137,7 +137,7 @@ async function cadastrarLivro() {
 					author: autor.value,
 					year: parseInt(ano.value),
 					pages: parseInt(paginas.value),
-					photo: descricao.value,
+					photos: descricao.value,
 				},
 			});
 			showMessage({

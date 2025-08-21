@@ -20,8 +20,8 @@
 					@click="abrirLivro(livro)"
 				>
 					<div class="livro-fundo"></div>
-					<img class="livro-img" :src="livro.img" :alt="livro.nome" />
-					<div class="livro-nome">{{ livro.nome }}</div>
+					<img class="livro-img" :src="livro.photos" :alt="livro.title" />
+					<div class="livro-nome">{{ livro.title }}</div>
 				</div>
 			</div>
 		</div>
@@ -39,88 +39,141 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: "ListarLivro",
-	props: {
-		livros: {
-			type: Array,
-			required: true,
-			default: () => [
-				{
-					nome: "Carmilla",
-					img: "https://i.pinimg.com/originals/97/5e/a2/975ea2ac189028a6d7feac374ae36181.jpg",
-				},
-				{
-					nome: "1984",
-					img: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg",
-				},
-				{
-					nome: "Dom Quixote",
-					img: "https://images-na.ssl-images-amazon.com/images/I/81vpsIs58WL.jpg",
-				},
-				{
-					nome: "O Pequeno Príncipe",
-					img: "https://cdn.awsli.com.br/1000x1000/2099/2099388/produto/123546412/cb8fb3d91b.jpg",
-				},
-				{
-					nome: "O Hobbit",
-					img: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg",
-				},
-				{
-					nome: "Alice no País das Maravilhas",
-					img: "https://images-na.ssl-images-amazon.com/images/I/91HHqVTAJQL.jpg",
-				},
-				{
-					nome: "Hamlet",
-					img: "https://images-na.ssl-images-amazon.com/images/I/81OthjkJBuL.jpg",
-				},
-				{
-					nome: "Macbeth",
-					img: "https://images-na.ssl-images-amazon.com/images/I/81h2gWPTYJL.jpg",
-				},
-				{
-					nome: "O Senhor dos Anéis",
-					img: "https://images-na.ssl-images-amazon.com/images/I/91dSMhdIzTL.jpg",
-				},
-				{
-					nome: "O Grande Gatsby",
-					img: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg",
-				},
-				{
-					nome: "Moby Dick",
-					img: "https://images-na.ssl-images-amazon.com/images/I/71HMyqG6MRL.jpg",
-				},
-				{
-					nome: "Orgulho e Preconceito",
-					img: "https://th.bing.com/th/id/OIP.RyanQ3hxUlT68wRcaH37LgHaKd?w=194&h=274&c=7&r=0&o=7&pid=1.7&rm=3",
-				},
-			],
-		},
-	},
-	data() {
-		return {
-			caixaBase: { largura: 165, altura: 226, gapX: 64, gapY: 76 },
-			aumentoAltura: 30,
-		};
-	},
-	methods: {
-		getPos(index) {
-			const totalAltura = this.caixaBase.altura + this.aumentoAltura;
-			const col = index % 4;
-			const row = Math.floor(index / 4);
-			const left = 131 + col * (this.caixaBase.largura + this.caixaBase.gapX);
-			const top = 42 + row * (totalAltura + this.caixaBase.gapY);
-			return { left: left + "px", top: top + "px" };
-		},
-		abrirLivro(livro) {
-			this.$router.push({
-				name: "Livro",
-				query: { nome: livro.nome, img: livro.img },
-			});
-		},
-	},
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { apiRoutes } from "@/assets/rotas";
+import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
+import { onMounted } from "vue";
+
+
+interface Book {
+  id: string;
+  title: string;
+  author: string;
+  pages: number;
+  year: number;
+  photos?: string;
+}
+
+const router = useRouter();
+const livros = ref<Book[]>([]);
+
+const caixaBase = { largura: 165, altura: 226, gapX: 64, gapY: 76 };
+const aumentoAltura = 30;
+
+const getPos = (index: number) => {
+  const totalAltura = caixaBase.altura + aumentoAltura;
+  const col = index % 4;
+  const row = Math.floor(index / 4);
+  const left = 131 + col * (caixaBase.largura + caixaBase.gapX);
+  const top = 42 + row * (totalAltura + caixaBase.gapY);
+  return { left: `${left}px`, top: `${top}px` };
 };
+
+const abrirLivro = (livro: Book) => {
+  router.push({
+    name: 'Livro',
+    query: { nome: livro.title, photos: livro.photos || 'https://via.placeholder.com/150' },
+  });
+};
+
+onMounted (() => {
+	ListarLivro();
+});
+
+async function ListarLivro() {
+	const response = await apiRequest(apiRoutes.books.base, router);
+	livros.value = response.value;
+	console.log(response);
+}
+
+
+// export default {
+// 	name: "ListarLivro",
+// 	props: {
+// 		livros: {
+// 			type: Array,
+// 			required: true,
+// 	// 		default: () => [
+// 	// 			{
+// 	// 				nome: "Carmilla",
+// 	// 				img: "https://i.pinimg.com/originals/97/5e/a2/975ea2ac189028a6d7feac374ae36181.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "1984",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Dom Quixote",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/81vpsIs58WL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "O Pequeno Príncipe",
+// 	// 				img: "https://cdn.awsli.com.br/1000x1000/2099/2099388/produto/123546412/cb8fb3d91b.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "O Hobbit",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Alice no País das Maravilhas",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/91HHqVTAJQL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Hamlet",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/81OthjkJBuL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Macbeth",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/81h2gWPTYJL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "O Senhor dos Anéis",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/91dSMhdIzTL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "O Grande Gatsby",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Moby Dick",
+// 	// 				img: "https://images-na.ssl-images-amazon.com/images/I/71HMyqG6MRL.jpg",
+// 	// 			},
+// 	// 			{
+// 	// 				nome: "Orgulho e Preconceito",
+// 	// 				img: "https://th.bing.com/th/id/OIP.RyanQ3hxUlT68wRcaH37LgHaKd?w=194&h=274&c=7&r=0&o=7&pid=1.7&rm=3",
+// 	// 			},
+// 	// 		],
+// 	// 	},
+// 	// },
+// 	},
+// 	data() {
+// 		return {
+// 			caixaBase: { largura: 165, altura: 226, gapX: 64, gapY: 76 },
+// 			aumentoAltura: 30,
+// 		};
+// 	},
+// 	methods: {
+// 		getPos(index) {
+// 			const totalAltura = this.caixaBase.altura + this.aumentoAltura;
+// 			const col = index % 4;
+// 			const row = Math.floor(index / 4);
+// 			const left = 131 + col * (this.caixaBase.largura + this.caixaBase.gapX);
+// 			const top = 42 + row * (totalAltura + this.caixaBase.gapY);
+// 			return { left: left + "px", top: top + "px" };
+// 		},
+// 		abrirLivro(livro) {
+// 			this.$router.push({
+// 				name: "Livro",
+// 				query: { nome: livro.nome, img: livro.img },
+// 			});
+// 		},
+// 	},
+// 	},
+
+// };
 </script>
 
 <style scoped>
