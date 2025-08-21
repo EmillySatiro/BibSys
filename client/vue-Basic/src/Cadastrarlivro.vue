@@ -102,55 +102,71 @@
 	</div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { apiRoutes } from '@/assets/rotas';
-import axios from 'axios';
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { apiRoutes } from "@/assets/rotas";
+import axios from "axios";
+import { showMessage } from "@/utils/showMessage";
 
-const router = useRouter()
+const router = useRouter();
 
-const titulo = ref('')
-const autor = ref('')
-const ano = ref('')
-const paginas = ref('')
-const descricao = ref('')
+const titulo = ref("");
+const autor = ref("");
+const ano = ref("");
+const paginas = ref("");
+const descricao = ref("");
 
-const popupMessage = ref('')
-const popupType = ref('')
-const showPopup = ref(false)
+const popupMessage = ref("");
+const popupType = ref("");
+const showPopup = ref(false);
 
 async function cadastrarLivro() {
-  if(titulo.value && autor.value && ano.value && paginas.value && descricao.value){
-  try {
-    const response = await axios.post(apiRoutes.books.base, {
-      title: titulo.value,
-      author: autor.value,
-      year: parseInt(ano.value),
-      pages: parseInt(paginas.value),
-      photo: descricao.value
-    })
-    console.log(response)
-  } catch (error) {
-    console.log(error)
-  }
-    popupMessage.value = 'Livro cadastrado com sucesso!'
-    popupType.value = 'success'
-    showPopup.value = true
-    setTimeout(() => {
-      showPopup.value = false
-      router.push({ name: 'Home' }) // volta para home
-    }, 1500)
-  } else {
-    popupMessage.value = 'Preencha todos os campos!'
-    popupType.value = 'error'
-    showPopup.value = true
-    setTimeout(() => showPopup.value = false, 1500)
-  }
+	if (
+		titulo.value &&
+		autor.value &&
+		ano.value &&
+		paginas.value &&
+		descricao.value
+	) {
+		try {
+			const response = await axios.post(apiRoutes.books.base, {
+				title: titulo.value,
+				author: autor.value,
+				year: parseInt(ano.value),
+				pages: parseInt(paginas.value),
+				photo: descricao.value,
+			});
+			showMessage({
+				text: "Livro cadastrado com sucesso!",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			voltarHome();
+		} catch (error) {
+			showMessage({
+				text: "Erro ao cadastrar livro!",
+				type: "error",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			console.log(error);
+		}
+	} else {
+		showMessage({
+			text: "Preencha todos os campos!",
+			type: "error",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
+	}
 }
 
 function voltarHome() {
-  router.push({ name: 'Home' })
+	router.push({ name: "Home" });
 }
 </script>
 

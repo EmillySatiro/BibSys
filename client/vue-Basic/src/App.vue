@@ -1,11 +1,13 @@
 <template>
-  <router-view />
+	<router-view />
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style>
 /* opcional global */
-body { margin: 0; font-family: system-ui, sans-serif; }
+body {
+	margin: 0;
+	font-family: system-ui, sans-serif;
+}
 </style>
