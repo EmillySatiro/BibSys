@@ -8,26 +8,26 @@ const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_KEY || '';
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
-  auth: {
-    persistSession: false,
-  },
+    auth: {
+        persistSession: false,
+    },
 });
 
 interface Database {
-  public: {
-    Tables: {
-    //   users: {
-    //     Row: { id: string; name: string; email: string };
-    //     Insert: { name: string; email: string };
-    //     Update: { name?: string; email?: string };
-    //   };
-      books: {
-        Row: { id: string; title: string; author: string; pages: number; year: number; photos: string };
-        Insert: { title: string; author: string; pages: number; year: number; photos: string };
-        Update: { title?: string; author?: string; pages?: number; year?: number; photos: string };
-      };
+    public: {
+        Tables: {
+            //   users: {
+            //     Row: { id: string; name: string; email: string };
+            //     Insert: { name: string; email: string };
+            //     Update: { name?: string; email?: string };
+            //   };
+            books: {
+                Row: { id: string; title: string; author: string; pages: number; year: number; photos: string };
+                Insert: { title: string; author: string; pages: number; year: number; photos: string };
+                Update: { title?: string; author?: string; pages?: number; year?: number; photos: string };
+            };
+        };
     };
-  };
 }
 
 export default supabase;

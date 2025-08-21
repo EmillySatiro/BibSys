@@ -22,7 +22,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 interface Users {
   id?: string;
-  name: string;
   email: string;
   password?: string;
 }
@@ -60,10 +59,10 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 
 app.post('/register', async (req: Request<{}, {}, Users>, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Name, email, and password are required' });
+    if (!email || !password) {
+      return res.status(400).json({ error: 'email and password are required' });
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ error: 'Invalid email format' });
@@ -75,7 +74,7 @@ app.post('/register', async (req: Request<{}, {}, Users>, res: Response) => {
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: { data: { email } },
     });
 
     if (authError) {
@@ -91,7 +90,7 @@ app.post('/register', async (req: Request<{}, {}, Users>, res: Response) => {
 
     const { data: createdUser, error: dbError } = await supabase
       .from('users')
-      .insert([{ id: authData.user.id, name, email }])
+      .insert([{ id: authData.user.id, email }])
       .select()
       .single();
 
@@ -133,7 +132,7 @@ app.post('/login', async (req: Request<{}, {}, { email: string; password: string
 
     const { data: user, error: dbError } = await supabase
       .from('users')
-      .select('id, name, email')
+      .select('id, email')
       .eq('id', authData.user.id)
       .single();
 
