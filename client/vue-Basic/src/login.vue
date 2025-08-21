@@ -16,6 +16,7 @@ function irParaCadastro() {
 
 function irParaHome() {
   if (email.value && senha.value) {
+    // Mensagem de confirmação
     popupMessage.value = 'Login realizado com sucesso!'
     popupType.value = 'success'
     showPopup.value = true
@@ -24,6 +25,7 @@ function irParaHome() {
       router.push({ name: 'Home' })
     }, 1500)
   } else {
+    // Mensagem de erro
     popupMessage.value = 'Preencha todos os campos!'
     popupType.value = 'error'
     showPopup.value = true
@@ -34,32 +36,37 @@ function irParaHome() {
 
 <template>
   <div class="pagina">
+
     <!-- Fundo verde -->
     <div class="fundo-verde"></div>
 
-    <!-- Container principal -->
+    <!-- Quadrado preto -->
     <div class="bloco-preto">
-      
-      <!-- Caixa de login -->
+
+      <!-- Caixa cinza -->
       <div class="bloco-cinza">
         <h1 class="titulo">Login</h1>
 
         <!-- Email -->
-        <div class="campo-login">
+        <div class="campo-login" style="top:130px;">
           <input type="text" v-model="email" placeholder="Digite seu e-mail"/>
-          <div class="icon">
-            <img src="/Pngs/mdi_email.ico" alt="email" />
+          <div class="icon email-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+              <image href="/Pngs/mdi_email.ico" width="40" height="40"/>
+            </svg>
           </div>
-          <div class="linha"></div>
+          <div class="linha email-line"></div>
         </div>
 
         <!-- Senha -->
-        <div class="campo-login">
+        <div class="campo-login" style="top:250px;">
           <input type="password" v-model="senha" placeholder="Digite sua senha"/>
-          <div class="icon">
-            <img src="/Pngs/bi_lock-fill.ico" alt="senha" />
+          <div class="icon lock-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+              <image href="/Pngs/bi_lock-fill.ico" width="40" height="40"/>
+            </svg>
           </div>
-          <div class="linha"></div>
+          <div class="linha password-line"></div>
         </div>
 
         <!-- Botão Login -->
@@ -71,10 +78,12 @@ function irParaHome() {
         </p>
       </div>
 
-      <!-- Logo e Marca -->
+      <!-- Logo e Marca BibSys -->
       <div class="logo-area">
         <div class="svg-container">
-          <img src="/favicon.ico" alt="logo" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
+            <image href="/favicon.ico" width="292.607" height="255.13"/>
+          </svg>
         </div>
         <h2 class="marca">BibSys</h2>
       </div>
@@ -83,6 +92,7 @@ function irParaHome() {
       <div v-if="showPopup" :class="['popup', popupType]">
         {{ popupMessage }}
       </div>
+
     </div>
   </div>
 </template>
@@ -91,74 +101,72 @@ function irParaHome() {
 :global(html, body, #app) {
   margin: 0;
   height: 100%;
+  overflow: hidden;
   background: #021A1A;
-  font-family: 'Tektur', sans-serif; /* mantém sua fonte */
 }
 
-/* Página ocupa toda a tela */
+/* Página */
 .pagina {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
+  width: 1512px;
+  height: 982px;
+  position: relative;
+  font-family: 'Tektur', sans-serif;
 }
 
-/* Fundo */
+/* Fundo verde */
 .fundo-verde {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
   background: #021A1A;
   z-index: 0;
 }
 
-/* Container central */
+/* Quadrado preto */
 .bloco-preto {
-  width: 100%;
-  max-width: 1200px;
+  width: 1455px;
+  height: 895px;
   background: #000;
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
+  position: absolute;
+  margin: auto;
+  top: calc((982px - 895px)/2);
+  left: calc((1512px - 1455px)/2);
   z-index: 1;
 }
 
-/* Caixa de login */
+/* Caixa cinza translúcida */
 .bloco-cinza {
-  flex: 1 1 400px;
+  position: relative; 
+  width: 780px;
+  height: 514.896px;
+  top: 120px;
+  left: 88px;
   background: rgba(185, 185, 185, 0.22);
   border: 2px solid #F1F7F7;
-  padding: 32px 24px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-sizing: border-box;
+  padding: 24px;
+  z-index: 2;
 }
 
 /* Título */
 .titulo {
-  font-size: 2.5rem;
+  position: absolute;
+  top: 32px;
+  left: 315px;
+  font-size: 64px;
   font-weight: 400;
   color: #FFF;
-  margin-bottom: 40px;
-  text-align: center;
-  font-family: 'Tektur', sans-serif; /* mantém fonte */
+  margin: 0;
 }
 
 /* Campos de login */
 .campo-login {
-  width: 100%;
-  max-width: 450px;
-  margin: 20px 0;
+  position: absolute;
+  left: 125px;
+  width: 514px;
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: space-between;
 }
 
 .campo-login input {
@@ -166,10 +174,9 @@ function irParaHome() {
   border: none;
   background: transparent;
   outline: none;
-  font-size: 1.1rem;
+  font-size: 20px;
   color: #FFF;
-  padding: 10px 40px 10px 10px;
-  font-family: 'Tektur', sans-serif;
+  padding: 8px 0;
 }
 
 .campo-login .linha {
@@ -181,34 +188,28 @@ function irParaHome() {
   background: #FFF;
 }
 
-.campo-login .icon {
-  position: absolute;
-  right: 0;
-  width: 30px;
-  height: 30px;
-}
-
-.campo-login .icon img {
-  width: 100%;
-  height: auto;
+.campo-login .icon svg {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
 }
 
 /* Botão login */
 .login-button {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 300px;
-  height: 55px;
+  position: absolute;
+  top: 390px;
+  left: 230px;
+  width: 344px;
+  height: 65px;
   background-color: #F1F7F7;
   color: #0b0b0b;
-  font-size: 1.5rem;
+  font-size: 36px;
   font-weight: 600;
   text-align: center;
-  line-height: 55px;
-  border-radius: 12px;
+  line-height: 65px;
+  border-radius: 20px;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.3s;
-  font-family: 'Tektur', sans-serif;
 }
 
 .login-button:hover {
@@ -220,11 +221,11 @@ function irParaHome() {
 
 /* Texto de cadastro */
 .signup-text {
-  margin-top: 20px;
-  font-size: 1rem;
+  position: absolute;
+  top: 460px;
+  left: 200px;
+  font-size: 20px;
   color: #FFF;
-  text-align: center;
-  font-family: 'Tektur', sans-serif;
 }
 
 .signup-text .highlight {
@@ -235,24 +236,22 @@ function irParaHome() {
 
 /* Logo e área decorativa */
 .logo-area {
-  flex: 1 1 300px;
-  min-width: 260px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  top: 200px;
+  left: 1000px;
+  z-index: 2;
 }
 
-.svg-container img {
-  max-width: 200px;
+.svg-container {
+  width: 272.607px;
+  height: 225.13px;
   filter: drop-shadow(0 0 20px #2CC295);
 }
 
 .marca {
-  color: #F1F7F7;
-  font-size: 3rem;
-  font-family: 'Stick No Bills', sans-serif; /* mantém fonte */
+ color: #F1F7F7;
+  font-size: 128px;
+  font-family: 'Stick No Bills', sans-serif;
   font-weight: 400;
   text-shadow: 0 0 8px #2CC295;
   margin: 0;
@@ -261,21 +260,20 @@ function irParaHome() {
 
 /* Pop-up estilo cyberpunk */
 .popup {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 250px;
-  padding: 20px;
+  min-width: 320px;
+  padding: 20px 40px;
   border-radius: 15px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 24px;
   font-weight: 600;
   color: #fff;
   z-index: 999;
   box-shadow: 0 0 25px rgba(44, 194, 149, 0.7);
   animation: popupAnim 0.3s ease-out;
-  font-family: 'Tektur', sans-serif;
 }
 
 .popup.error {
@@ -291,25 +289,5 @@ function irParaHome() {
 @keyframes popupAnim {
   0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .bloco-preto {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .titulo {
-    font-size: 2rem;
-  }
-
-  .marca {
-    font-size: 2.5rem;
-  }
-
-  .login-button {
-    font-size: 1.2rem;
-  }
 }
 </style>
