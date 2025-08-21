@@ -34,9 +34,15 @@ SUPABASE_ACCESS_TOKEN=your_supabase_token
 SUPABASE_DB_PASSWORD=your_supabase_password
 ```
 
-## ▶️ Migration
+## ⚙️ Migration
 
-Caso seja necessário
+Caso seja necessário executar as migrações do banco, utilizar:
+
+```bash
+cd ..
+cd server
+npm run migration
+```
 
 ## ▶️ Execução
 
@@ -69,6 +75,8 @@ Abra no navegador:
 - Supabase
 - Vue 3 + Vite
 - Axios
+
+## 🖼️ Interface
 
 ## 📂 Estrutura do código
 
