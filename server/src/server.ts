@@ -1,10 +1,21 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import supabase from './supabaseConnection';
-import serverless from 'serverless-http'
 
 export const app = express();
 app.use(bodyParser.json());
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 interface Users {
   id?: string;
@@ -207,5 +218,3 @@ const host = '0.0.0.0';
 app.listen(port, host, () => {
   console.log(`Server working on http://${host}:${port}`);
 });
-
-export default serverless(app)
