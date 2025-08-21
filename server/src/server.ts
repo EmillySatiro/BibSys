@@ -4,6 +4,21 @@ import serverless from 'serverless-http';
 
 const app = express();
 app.use(express.json()); 
+// import bodyParser from 'body-parser';
+// export const app = express();
+// app.use(bodyParser.json());
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 interface Users {
   id?: string;
@@ -350,4 +365,9 @@ app.put('/books/:id', authMiddleware, async (req: Request<{ id: string }, {}, Pa
   }
 });
 
-export const handler = serverless(app);
+const port = process.env.PORT ? Number(process.env.PORT) : 3333;
+const host = '0.0.0.0';
+
+app.listen(port, host, () => {
+  console.log(`Server working on http://${host}:${port}`);
+});
