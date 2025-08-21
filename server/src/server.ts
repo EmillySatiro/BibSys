@@ -88,15 +88,7 @@ app.post('/register', async (req: Request<{}, {}, Users>, res: Response) => {
       return res.status(500).json({ error: 'Failed to create user' });
     }
 
-    const { data: createdUser, error: dbError } = await supabase
-      .from('users')
-      .insert([{ id: authData.user.id, email }])
-      .select()
-      .single();
-
-    if (dbError) throw dbError;
-
-    res.status(201).json({ value: createdUser });
+    res.status(201).json({ value: authData });
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -130,17 +122,9 @@ app.post('/login', async (req: Request<{}, {}, { email: string; password: string
       return res.status(500).json({ error: 'Failed to create session' });
     }
 
-    const { data: user, error: dbError } = await supabase
-      .from('users')
-      .select('id, email')
-      .eq('id', authData.user.id)
-      .single();
-
-    if (dbError) throw dbError;
-
     res.json({
       value: {
-        user,
+        authData,
         token: authData.session.access_token,
         expires_at: authData.session.expires_at,
       },
@@ -287,7 +271,7 @@ app.get('/books/:id', authMiddleware, async (req: Request<{ id: string }>, res: 
 app.post('/books', authMiddleware, async (req: Request<{}, {}, Book>, res: Response) => {
   try {
     const { title, author, pages, year, photos } = req.body;
-    if (!title || !author || !pages || !year || photos) {
+    if (!title || !author || !pages || !year || !photos) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     if (pages < 1 || year < 0) {

@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
-import axios from "axios";
 import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
 const email = ref("");
@@ -16,7 +16,7 @@ const showPopup = ref(false);
 
 async function irParaHome() {
 	if (email.value && senha.value && senhaConfirm.value) {
-		if (senha.value === senhaConfirm.value) {
+		if (senha.value !== senhaConfirm.value) {
 			showMessage({
 				text: "As senhas não coincidem!",
 				type: "error",
@@ -26,9 +26,12 @@ async function irParaHome() {
 			});
 		} else {
 			try {
-				const response = await axios.post(apiRoutes.auth.register, {
-					email: email.value,
-					password: senha.value,
+				await apiRequest(apiRoutes.auth.register, router, {
+					method: "POST",
+					body: {
+						email: email.value,
+						password: senha.value,
+					},
 				});
 				showMessage({
 					text: "Cadastro realizado com sucesso!",
