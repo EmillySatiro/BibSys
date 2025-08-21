@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import supabase from './supabaseConnection';
 import serverless from 'serverless-http'
 
-const app = express();
+export const app = express();
 app.use(bodyParser.json());
 
 interface Users {
@@ -130,4 +130,4 @@ app.put('/users/:id', async (req: Request<{ id: string }, {}, Partial<Users>>, r
 //   console.log(`Server working on http://${host}:${port}`);
 // });
 
-export const handler = serverless(app)
+export default serverless(app)
