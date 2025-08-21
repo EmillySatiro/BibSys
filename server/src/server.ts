@@ -131,4 +131,3 @@ app.put('/users/:id', async (req: Request<{ id: string }, {}, Partial<Users>>, r
 // });
 
 export const handler = serverless(app)
-export default app
