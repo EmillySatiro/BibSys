@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
-import axios from "axios";
 import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
 const email = ref("");
@@ -20,16 +20,21 @@ function irParaCadastro() {
 async function irParaHome() {
 	if (email.value && senha.value) {
 		try {
-			const response = await axios.post(apiRoutes.auth.login, {
-				email: email.value,
-				password: senha.value,
+			const response = await apiRequest(apiRoutes.auth.login, router, {
+				method: "POST",
+				body: {
+					email: email.value,
+					password: senha.value,
+				},
 			});
+			localStorage.setItem("token", response.value.token);
 			showMessage({
 				text: "Login realizado com sucesso!",
 				popupMessage: popupMessage,
 				popupType: popupType,
 				showPopup: showPopup,
 			});
+			router.push({ name: "Home" });
 		} catch (error) {
 			showMessage({
 				text: "Erro ao fazer login!",

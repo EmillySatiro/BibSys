@@ -106,8 +106,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
-import axios from "axios";
 import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
 
@@ -130,12 +130,15 @@ async function cadastrarLivro() {
 		descricao.value
 	) {
 		try {
-			const response = await axios.post(apiRoutes.books.base, {
-				title: titulo.value,
-				author: autor.value,
-				year: parseInt(ano.value),
-				pages: parseInt(paginas.value),
-				photo: descricao.value,
+			await apiRequest(apiRoutes.books.base, router, {
+				method: "POST",
+				body: {
+					title: titulo.value,
+					author: autor.value,
+					year: parseInt(ano.value),
+					pages: parseInt(paginas.value),
+					photo: descricao.value,
+				},
 			});
 			showMessage({
 				text: "Livro cadastrado com sucesso!",
