@@ -1,5 +1,6 @@
 <template>
 	<div class="tela-cadastro">
+		<LoadingOverlay :visible="loading" text="Editando livro..." />
 		<!-- Fundo SVG -->
 		<div class="svg-container2" aria-hidden="true">
 			<svg
@@ -109,15 +110,17 @@ import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
 import { checkLogin } from "@/utils/checkLogin";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
+
+const loading = ref(false);
+const router = useRouter();
+const livro = JSON.parse(localStorage.getItem("livroSelecionado")) || {};
 
 onMounted(() => {
 	if (!checkLogin()) {
 		router.push("/");
 	}
 });
-
-const router = useRouter();
-const livro = JSON.parse(localStorage.getItem("livroSelecionado")) || {};
 
 const titulo = ref(livro.title);
 const autor = ref(livro.author);
@@ -138,7 +141,7 @@ async function editarLivro() {
 		descricao.value
 	) {
 		try {
-			await apiRequest(apiRoutes.books.porId(livro.id), router, {
+			await apiRequest(apiRoutes.books.porId(livro.id), router, loading, {
 				method: "PUT",
 				body: {
 					title: titulo.value,

@@ -12,8 +12,14 @@
 		<!-- CAIXA VERDE COM SCROLL -->
 		<div class="caixa-verde">
 			<div class="livros-container">
-				<div class="livro-box" v-for="(livro, index) in livros" :key="index" :style="getPos(index)"
-					@click="abrirLivro(livro)">
+				<LoadingOverlay :visible="loading" text="Carregando livros..." />
+				<div
+					class="livro-box"
+					v-for="(livro, index) in livros"
+					:key="index"
+					:style="getPos(index)"
+					@click="abrirLivro(livro)"
+				>
 					<div class="livro-fundo"></div>
 					<img class="livro-img" :src="livro.photos" :alt="livro.title" />
 					<div class="livro-nome">{{ livro.title }}</div>
@@ -41,8 +47,10 @@ import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
 import { onMounted } from "vue";
-import { Book } from "@/type/types"
+import { Book } from "@/type/types";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
+const loading = ref(false);
 const router = useRouter();
 const livros = ref<Book[]>([]);
 
@@ -61,7 +69,7 @@ const getPos = (index: number) => {
 const abrirLivro = (livro: Book) => {
 	localStorage.setItem("livroSelecionado", JSON.stringify(livro));
 	router.push({
-		name: 'Livro',
+		name: "Livro",
 		query: { id: livro.id },
 	});
 };
@@ -71,12 +79,10 @@ onMounted(() => {
 });
 
 async function ListarLivro() {
-	const response = await apiRequest(apiRoutes.books.base, router);
+	const response = await apiRequest(apiRoutes.books.base, router, loading);
 	livros.value = response.value;
 	console.log(response);
 }
-
-
 </script>
 
 <style scoped>

@@ -1,65 +1,7 @@
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { apiRoutes } from "@/assets/rotas";
-import { showMessage } from "@/utils/showMessage";
-import { apiRequest } from "@/utils/apiRequest";
-
-const router = useRouter();
-const email = ref("");
-const senha = ref("");
-
-const popupMessage = ref("");
-const popupType = ref("");
-const showPopup = ref(false);
-
-function irParaCadastro() {
-	router.push("/cadastro");
-}
-
-async function irParaHome() {
-	if (email.value && senha.value) {
-		try {
-			const response = await apiRequest(apiRoutes.auth.login, router, {
-				method: "POST",
-				body: {
-					email: email.value,
-					password: senha.value,
-				},
-			});
-			localStorage.setItem("token", response.value.token);
-			showMessage({
-				text: "Login realizado com sucesso!",
-				popupMessage: popupMessage,
-				popupType: popupType,
-				showPopup: showPopup,
-			});
-			router.push({ name: "Home" });
-		} catch (error) {
-			showMessage({
-				text: "Erro ao fazer login!",
-				type: "error",
-				popupMessage: popupMessage,
-				popupType: popupType,
-				showPopup: showPopup,
-			});
-			console.log(error);
-		}
-	} else {
-		showMessage({
-			text: "Preencha todos os campos!",
-			type: "error",
-			popupMessage: popupMessage,
-			popupType: popupType,
-			showPopup: showPopup,
-		});
-	}
-}
-</script>
-
 <template>
 	<div class="pagina">
 		<!-- Fundo verde -->
+		<LoadingOverlay :visible="loading" text="Realizando login..." />
 		<div class="fundo-verde"></div>
 
 		<!-- Quadrado preto -->
@@ -127,6 +69,67 @@ async function irParaHome() {
 		</div>
 	</div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { apiRoutes } from "@/assets/rotas";
+import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
+
+const loading = ref(false);
+const router = useRouter();
+const email = ref("");
+const senha = ref("");
+
+const popupMessage = ref("");
+const popupType = ref("");
+const showPopup = ref(false);
+
+function irParaCadastro() {
+	router.push("/cadastro");
+}
+
+async function irParaHome() {
+	if (email.value && senha.value) {
+		try {
+			const response = await apiRequest(apiRoutes.auth.login, router, loading, {
+				method: "POST",
+				body: {
+					email: email.value,
+					password: senha.value,
+				},
+			});
+			localStorage.setItem("token", response.value.token);
+			showMessage({
+				text: "Login realizado com sucesso!",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			router.push({ name: "Home" });
+		} catch (error) {
+			showMessage({
+				text: "Erro ao fazer login!",
+				type: "error",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+			console.log(error);
+		}
+	} else {
+		showMessage({
+			text: "Preencha todos os campos!",
+			type: "error",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
+	}
+}
+</script>
 
 <style scoped>
 :global(html, body, #app) {

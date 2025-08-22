@@ -1,5 +1,6 @@
 <template>
 	<div class="pagina">
+		<LoadingOverlay :visible="loading" text="Excluindo livro..." />
 		<!-- Logo -->
 		<div class="logo">
 			<img src="/favicon.ico" alt="Logo BibSys" />
@@ -59,7 +60,9 @@ import { showMessage } from "@/utils/showMessage";
 import { apiRoutes } from "@/assets/rotas";
 import { Book } from "./type/types";
 import { checkLogin } from "@/utils/checkLogin";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
+const loading = ref(false);
 const router = useRouter();
 
 const popupMessage = ref("");
@@ -92,7 +95,7 @@ async function irParaExcluir() {
 	}
 
 	try {
-		await apiRequest(apiRoutes.books.porId(livro.value.id), router, {
+		await apiRequest(apiRoutes.books.porId(livro.value.id), router, loading, {
 			method: "DELETE",
 		});
 
