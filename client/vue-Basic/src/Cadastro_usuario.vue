@@ -39,7 +39,7 @@ async function irParaHome() {
 					popupType: popupType,
 					showPopup: showPopup,
 				});
-				voltarHome()
+				setTimeout(() => (voltarHome()), 1500);
 			} catch (error) {
 				showMessage({
 					text: "Erro ao fazer registro!",
