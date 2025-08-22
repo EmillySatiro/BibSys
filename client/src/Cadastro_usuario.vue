@@ -1,74 +1,6 @@
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { apiRoutes } from "@/assets/rotas";
-import { showMessage } from "@/utils/showMessage";
-import { apiRequest } from "@/utils/apiRequest";
-
-const router = useRouter();
-const email = ref("");
-const senha = ref("");
-const senhaConfirm = ref("");
-
-const popupMessage = ref("");
-const popupType = ref("");
-const showPopup = ref(false);
-
-async function irParaHome() {
-	if (email.value && senha.value && senhaConfirm.value) {
-		if (senha.value !== senhaConfirm.value) {
-			showMessage({
-				text: "As senhas não coincidem!",
-				type: "error",
-				popupMessage: popupMessage,
-				popupType: popupType,
-				showPopup: showPopup,
-			});
-		} else {
-			try {
-				await apiRequest(apiRoutes.auth.register, router, {
-					method: "POST",
-					body: {
-						email: email.value,
-						password: senha.value,
-					},
-				});
-				showMessage({
-					text: "Cadastro realizado com sucesso!",
-					popupMessage: popupMessage,
-					popupType: popupType,
-					showPopup: showPopup,
-				});
-				setTimeout(() => (voltarHome()), 1500);
-			} catch (error) {
-				showMessage({
-					text: "Erro ao fazer registro!",
-					type: "error",
-					popupMessage: popupMessage,
-					popupType: popupType,
-					showPopup: showPopup,
-				});
-				console.log(error);
-			}
-		}
-	} else {
-		showMessage({
-			text: "Preencha todos os campos!",
-			type: "error",
-			popupMessage: popupMessage,
-			popupType: popupType,
-			showPopup: showPopup,
-		});
-	}
-}
-
-function voltarHome() {
-	router.push({ name: "Login" });
-}
-</script>
-
 <template>
 	<div class="pagina">
+		<LoadingOverlay :visible="loading" text="Cadastrando usuário..." />
 		<div class="fundo-verde"></div>
 		<div class="bloco-preto">
 			<div class="bloco-cinza">
@@ -151,6 +83,77 @@ function voltarHome() {
 		</div>
 	</div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { apiRoutes } from "@/assets/rotas";
+import { showMessage } from "@/utils/showMessage";
+import { apiRequest } from "@/utils/apiRequest";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
+
+const loading = ref(false);
+const router = useRouter();
+const email = ref("");
+const senha = ref("");
+const senhaConfirm = ref("");
+
+const popupMessage = ref("");
+const popupType = ref("");
+const showPopup = ref(false);
+
+async function irParaHome() {
+	if (email.value && senha.value && senhaConfirm.value) {
+		if (senha.value !== senhaConfirm.value) {
+			showMessage({
+				text: "As senhas não coincidem!",
+				type: "error",
+				popupMessage: popupMessage,
+				popupType: popupType,
+				showPopup: showPopup,
+			});
+		} else {
+			try {
+				await apiRequest(apiRoutes.auth.register, router, loading, {
+					method: "POST",
+					body: {
+						email: email.value,
+						password: senha.value,
+					},
+				});
+				showMessage({
+					text: "Cadastro realizado com sucesso!",
+					popupMessage: popupMessage,
+					popupType: popupType,
+					showPopup: showPopup,
+				});
+				setTimeout(() => voltarHome(), 1500);
+			} catch (error) {
+				showMessage({
+					text: "Erro ao fazer registro!",
+					type: "error",
+					popupMessage: popupMessage,
+					popupType: popupType,
+					showPopup: showPopup,
+				});
+				console.log(error);
+			}
+		}
+	} else {
+		showMessage({
+			text: "Preencha todos os campos!",
+			type: "error",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
+	}
+}
+
+function voltarHome() {
+	router.push({ name: "Login" });
+}
+</script>
 
 <style scoped>
 :global(html, body, #app) {

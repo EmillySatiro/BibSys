@@ -1,9 +1,15 @@
 <template>
 	<div class="tela-cadastro">
+		<LoadingOverlay :visible="loading" text="Editando livro..." />
 		<!-- Fundo SVG -->
 		<div class="svg-container2" aria-hidden="true">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2153.885" preserveAspectRatio="xMidYMid slice"
-				width="100%" height="100%">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 2000 2153.885"
+				preserveAspectRatio="xMidYMid slice"
+				width="100%"
+				height="100%"
+			>
 				<image href="/Pngs/fundo-estrelas.ico" width="100%" height="100%" />
 			</svg>
 		</div>
@@ -18,12 +24,36 @@
 			<div class="caixa-rodape"></div>
 
 			<!-- Inputs reais -->
-			<input v-model="titulo" type="text" class="input-real titulo" placeholder="Digite o título do livro" />
-			<input v-model="autor" type="text" class="input-real autor" placeholder="Digite o nome do autor" />
-			<input v-model="ano" type="text" class="input-real ano" placeholder="DD/MM/AAAA" />
-			<input v-model="paginas" type="number" class="input-real paginas"
-				placeholder="Digite a quantidade de páginas" />
-			<input v-model="descricao" type="text" class="input-real descricao" placeholder="Informe URL da imagem" />
+			<input
+				v-model="titulo"
+				type="text"
+				class="input-real titulo"
+				placeholder="Digite o título do livro"
+			/>
+			<input
+				v-model="autor"
+				type="text"
+				class="input-real autor"
+				placeholder="Digite o nome do autor"
+			/>
+			<input
+				v-model="ano"
+				type="text"
+				class="input-real ano"
+				placeholder="DD/MM/AAAA"
+			/>
+			<input
+				v-model="paginas"
+				type="number"
+				class="input-real paginas"
+				placeholder="Digite a quantidade de páginas"
+			/>
+			<input
+				v-model="descricao"
+				type="text"
+				class="input-real descricao"
+				placeholder="Informe URL da imagem"
+			/>
 
 			<!-- Botões -->
 			<div class="botao-cadastrar" @click="editarLivro">Editar livro</div>
@@ -43,7 +73,12 @@
 			<div class="titulo-principal">BibSys</div>
 
 			<div class="svg-container">
-				<svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="292.607"
+					height="255.13"
+					viewBox="0 0 292.607 255.13"
+				>
 					<image href="/favicon.ico" width="200" height="100" />
 				</svg>
 			</div>
@@ -69,14 +104,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
+import { checkLogin } from "@/utils/checkLogin";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
+const loading = ref(false);
 const router = useRouter();
-const livro = JSON.parse(localStorage.getItem("livroSelecionado"));
+const livro = JSON.parse(localStorage.getItem("livroSelecionado")) || {};
+
+onMounted(() => {
+	if (!checkLogin()) {
+		router.push("/");
+	}
+});
 
 const titulo = ref(livro.title);
 const autor = ref(livro.author);
@@ -96,9 +140,8 @@ async function editarLivro() {
 		paginas.value &&
 		descricao.value
 	) {
-		
 		try {
-			await apiRequest(apiRoutes.books.porId(livro.id), router, {
+			await apiRequest(apiRoutes.books.porId(livro.id), router, loading, {
 				method: "PUT",
 				body: {
 					title: titulo.value,
@@ -114,8 +157,7 @@ async function editarLivro() {
 				popupType: popupType,
 				showPopup: showPopup,
 			});
-			setTimeout(() => (voltarHome()), 1500);
-			voltarHome();
+			setTimeout(() => voltarHome(), 1500);
 		} catch (error) {
 			console.error(error);
 			showMessage({

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { Ref } from "vue";
 import { Router } from "vue-router";
 
 interface ApiRequestOptions {
@@ -10,6 +11,7 @@ interface ApiRequestOptions {
 export async function apiRequest(
 	route: string,
 	router: Router,
+	loading: Ref<boolean, boolean>,
 	options: ApiRequestOptions = {}
 ) {
 	const token = localStorage.getItem("token");
@@ -27,6 +29,7 @@ export async function apiRequest(
 	};
 
 	try {
+		loading.value = true;
 		const response = await axios(config);
 		return response.data;
 	} catch (error: any) {
@@ -36,5 +39,7 @@ export async function apiRequest(
 			localStorage.setItem("token", "");
 		}
 		throw error;
+	} finally {
+		loading.value = false;
 	}
 }

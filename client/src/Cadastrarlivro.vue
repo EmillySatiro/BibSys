@@ -1,5 +1,6 @@
 <template>
 	<div class="tela-cadastro">
+		<LoadingOverlay :visible="loading" text="Cadastrando livro..." />
 		<!-- Fundo SVG -->
 		<div class="svg-container2" aria-hidden="true">
 			<svg
@@ -103,12 +104,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
+import { checkLogin } from "@/utils/checkLogin";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
+const loading = ref(false);
 const router = useRouter();
 
 const titulo = ref("");
@@ -121,6 +125,12 @@ const popupMessage = ref("");
 const popupType = ref("");
 const showPopup = ref(false);
 
+onMounted(() => {
+	if (!checkLogin()) {
+		router.push("/");
+	}
+});
+
 async function cadastrarLivro() {
 	if (
 		titulo.value &&
@@ -130,7 +140,7 @@ async function cadastrarLivro() {
 		descricao.value
 	) {
 		try {
-			await apiRequest(apiRoutes.books.base, router, {
+			await apiRequest(apiRoutes.books.base, router, loading, {
 				method: "POST",
 				body: {
 					title: titulo.value,
@@ -146,7 +156,7 @@ async function cadastrarLivro() {
 				popupType: popupType,
 				showPopup: showPopup,
 			});
-			setTimeout(() => (voltarHome()), 1500);
+			setTimeout(() => voltarHome(), 1500);
 		} catch (error) {
 			showMessage({
 				text: "Erro ao cadastrar livro!",

@@ -21,7 +21,7 @@
 			"command": "bash",
 			"args": ["-c", "source ~/.nvm/nvm.sh && npm run dev"],
 			"options": {
-				"cwd": "${workspaceFolder}/client/vue-Basic/"
+				"cwd": "${workspaceFolder}/client/"
 			},
 			"group": {
 				"kind": "build",
