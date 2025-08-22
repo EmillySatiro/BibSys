@@ -1,5 +1,5 @@
 
-![Logo](client/vue-Basic/Pngs/Home.png)
+![Logo](client/Pngs/Home.png)
 Este projeto consiste em um sistema para o gerenciamento de livros,desenvolvido com **Node.js (Express + Supabase)** no back-end e **Vue 3 + Vite** no front-end. Permitindo que usuários realizem operações essenciais como cadastro de novos livros, listagem, consulta de detalhes, edição e exclusão.
 
 ---
@@ -80,34 +80,34 @@ Abra no navegador:
 ###  Tela de Login
 Tela onde o usuário acessa o sistema utilizando seu **e-mail e senha previamente cadastrados**.  
 
-![Tela Login](client/vue-Basic/Pngs/Tela_login.png)
+![Tela Login](client/Pngs/Tela_login.png)
 
 ### Tela de Cadastro de Usuário
 Tela utilizada para **registrar um novo usuário**, informando e-mail e senha, permitindo assim o acesso ao sistema.  
 
-![Tela Cadastro](client/vue-Basic/Pngs/tela_cadastro.png)
+![Tela Cadastro](client/Pngs/tela_cadastro.png)
 
 ###  Tela Home
 Tela onde o usuário pode escolher entre **cadastrar novos livros** ou **listar os já cadastrados**.  
 
-![Tela Home](client/vue-Basic/Pngs/Tela_Home.png)
+![Tela Home](client/Pngs/Tela_Home.png)
 
 ### Tela de Catálogo de Livros
 Tela onde o usuário pode visualizar **todos os livros disponíveis** e escolher qual deseja ver em mais detalhes.  
 
-![Tela Catálogo de Livros](client/vue-Basic/Pngs/Tela_listar_livros.png)
+![Tela Catálogo de Livros](client/Pngs/Tela_listar_livros.png)
 
 
 ###  Tela de Detalhes do Livro
 Tela onde o usuário pode visualizar **todas as informações de um livro**, além de escolher se deseja **editar ou excluir**.  
 
-![Tela Detalhes do Livro](client/vue-Basic/Pngs/Exibir_livro.png)
+![Tela Detalhes do Livro](client/Pngs/Exibir_livro.png)
 
 
 ###  Tela de Edição de Livro
 Tela onde o usuário pode **editar as informações de um livro** já cadastrado no sistema.  
 
-![Tela Edição de Livro](client/vue-Basic/Pngs/Editar_livro.png)
+![Tela Edição de Livro](client/Pngs/Editar_livro.png)
 
 ## 📂 Estrutura do código
 
