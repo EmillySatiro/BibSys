@@ -12,13 +12,8 @@
 		<!-- CAIXA VERDE COM SCROLL -->
 		<div class="caixa-verde">
 			<div class="livros-container">
-				<div
-					class="livro-box"
-					v-for="(livro, index) in livros"
-					:key="index"
-					:style="getPos(index)"
-					@click="abrirLivro(livro)"
-				>
+				<div class="livro-box" v-for="(livro, index) in livros" :key="index" :style="getPos(index)"
+					@click="abrirLivro(livro)">
 					<div class="livro-fundo"></div>
 					<img class="livro-img" :src="livro.photos" :alt="livro.title" />
 					<div class="livro-nome">{{ livro.title }}</div>
@@ -46,16 +41,7 @@ import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
 import { onMounted } from "vue";
-
-
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  pages: number;
-  year: number;
-  photos?: string;
-}
+import { Book } from "@/type/types"
 
 const router = useRouter();
 const livros = ref<Book[]>([]);
@@ -64,22 +50,23 @@ const caixaBase = { largura: 165, altura: 226, gapX: 64, gapY: 76 };
 const aumentoAltura = 30;
 
 const getPos = (index: number) => {
-  const totalAltura = caixaBase.altura + aumentoAltura;
-  const col = index % 4;
-  const row = Math.floor(index / 4);
-  const left = 131 + col * (caixaBase.largura + caixaBase.gapX);
-  const top = 42 + row * (totalAltura + caixaBase.gapY);
-  return { left: `${left}px`, top: `${top}px` };
+	const totalAltura = caixaBase.altura + aumentoAltura;
+	const col = index % 4;
+	const row = Math.floor(index / 4);
+	const left = 131 + col * (caixaBase.largura + caixaBase.gapX);
+	const top = 42 + row * (totalAltura + caixaBase.gapY);
+	return { left: `${left}px`, top: `${top}px` };
 };
 
 const abrirLivro = (livro: Book) => {
-  router.push({
-    name: 'Livro',
-    query: { nome: livro.title, photos: livro.photos || 'https://via.placeholder.com/150' },
-  });
+	localStorage.setItem("livroSelecionado", JSON.stringify(livro));
+	router.push({
+		name: 'Livro',
+		query: { id: livro.id },
+	});
 };
 
-onMounted (() => {
+onMounted(() => {
 	ListarLivro();
 });
 
@@ -316,8 +303,10 @@ async function ListarLivro() {
 
 .voltar-home {
 	padding: 5px 60px;
-	background-color: #f1f7f7; /* branco de base */
-	color: #021a1a; /* texto escuro */
+	background-color: #f1f7f7;
+	/* branco de base */
+	color: #021a1a;
+	/* texto escuro */
 	font-size: 28px;
 	border-radius: 8px;
 	cursor: pointer;
@@ -328,7 +317,8 @@ async function ListarLivro() {
 .voltar-home:hover {
 	transform: scale(1.05);
 	box-shadow: 0 8px 20px rgba(44, 194, 149, 0.6);
-	background-color: #2cc295; /* muda para verde só no hover */
+	background-color: #2cc295;
+	/* muda para verde só no hover */
 	color: white;
 }
 </style>
