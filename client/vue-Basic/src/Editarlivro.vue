@@ -297,8 +297,8 @@ body {
 	width: 302px;
 	height: 52px;
 	position: absolute;
-	left: 894px;
-	top: 759px;
+	left: 896px;
+	top: 762px;
 	background: #f1f7f7;
 	color: #021a1a;
 	font-size: 40px;

@@ -216,7 +216,7 @@ async function ListarLivro() {
 	position: absolute;
 	top: 180px;
 	left: 160px;
-	width: 1212px;
+	width: 1145px;
 	height: 480px;
 	background: rgba(2, 26, 26, 0.85);
 	overflow-y: auto;
@@ -260,12 +260,12 @@ async function ListarLivro() {
 
 .livro-img {
 	position: absolute;
-	width: 117px;
-	height: 204px;
-	top: 26px;
-	left: 24px;
+	width: 160px;
+	height: 250px;
+	top: 4px;
+	left: 4px;
 	object-fit: cover;
-	border-radius: 6px;
+	border-radius: 8px;
 }
 
 .livro-nome {
@@ -281,7 +281,7 @@ async function ListarLivro() {
 
 /* RODAPÉ */
 .caixa-rodape {
-	width: 1200px;
+	width: 1105px;
 	height: 55px;
 	position: absolute;
 	left: 160px;
