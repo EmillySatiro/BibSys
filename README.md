@@ -77,17 +77,17 @@ Abra no navegador:
 
 ## 🖼️ Interface
 
+### 🏠 Tela Home
+![Tela Home](client/vue-Basic/Pngs/Tela_Home.png)
+
 ### 🔑 Tela de Login
-![Tela de Login](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215445.png)
+![Tela Login](client/vue-Basic/Pngs/Tela_login.png)
 
 ### 📝 Tela de Cadastro
-![Tela de Cadastro](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215500.png)
+![Tela Cadastro](client/vue-Basic/Pngs/tela_cadastro.png)
 
-### 🏠 Home
-![Tela Home](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215516.png)
-
-### ➕ Cadastro de Livro
-![Cadastro de Livro](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20220614.png)
+### 📚 Tela de Cadastro de Livro
+![Tela Cadastro Livro](client/vue-Basic/Pngs/Tela_cadastrolivro.png)
 
 
 ## 📂 Estrutura do código
