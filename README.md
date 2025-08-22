@@ -76,8 +76,18 @@ Abra no navegador:
 - Axios
 
 ## 🖼️ Interface
-Tela inicial do sistema:
 
+### 🔑 Tela de Login
+![Tela de Login](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215445.png)
+
+### 📝 Tela de Cadastro
+![Tela de Cadastro](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215500.png)
+
+### 🏠 Home
+![Tela Home](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20215516.png)
+
+### ➕ Cadastro de Livro
+![Cadastro de Livro](client/vue-Basic/Pngs/Captura%20de%20tela%202025-08-21%20220614.png)
 
 
 ## 📂 Estrutura do código
