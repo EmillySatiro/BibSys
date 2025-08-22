@@ -135,7 +135,7 @@ app.post('/login', async (req: Request<{}, {}, { email: string; password: string
   }
 });
 
-app.get('/books', authMiddleware, async (_req: Request, res: Response) => {
+app.get('/books', async (_req: Request, res: Response) => {
   try {
     const { data: books, error } = await supabase.from('books').select('*');
     if (error) throw error;

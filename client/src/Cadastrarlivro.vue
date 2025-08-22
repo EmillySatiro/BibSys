@@ -103,11 +103,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { apiRoutes } from "@/assets/rotas";
 import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
+import { checkLogin } from "@/utils/checkLogin";
 
 const router = useRouter();
 
@@ -120,6 +121,12 @@ const descricao = ref("");
 const popupMessage = ref("");
 const popupType = ref("");
 const showPopup = ref(false);
+
+onMounted(() => {
+	if (!checkLogin()) {
+		router.push("/");
+	}
+});
 
 async function cadastrarLivro() {
 	if (
@@ -146,7 +153,7 @@ async function cadastrarLivro() {
 				popupType: popupType,
 				showPopup: showPopup,
 			});
-			setTimeout(() => (voltarHome()), 1500);
+			setTimeout(() => voltarHome(), 1500);
 		} catch (error) {
 			showMessage({
 				text: "Erro ao cadastrar livro!",

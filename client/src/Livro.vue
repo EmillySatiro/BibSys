@@ -1,16 +1,71 @@
+<template>
+	<div class="pagina">
+		<!-- Logo -->
+		<div class="logo">
+			<img src="/favicon.ico" alt="Logo BibSys" />
+			<span>BibSys</span>
+		</div>
+
+		<!-- Link voltar -->
+		<div class="voltar-lista" @click="$router.push('/listarlivro')">
+			← Voltar para a lista
+		</div>
+
+		<!-- Caixa principal -->
+		<div class="caixa-principal">
+			<!-- Imagem do livro -->
+			<div class="caixa-imagem">
+				<img :src="livro.photos" :alt="livro.title" />
+			</div>
+
+			<!-- Conteúdo textual -->
+			<div class="conteudo">
+				<div class="titulo-livro">{{ livro.title }}</div>
+				<div class="autor">Autor: {{ livro.author || "Desconhecido" }}</div>
+				<div class="ano">Ano: {{ livro.year || "-" }}</div>
+				<div class="paginas">Páginas: {{ livro.pages || "-" }}</div>
+
+				<!-- Botões -->
+				<div class="botoes" v-if="estaLogado">
+					<div class="botao botao-editar" @click="irParaEditar">
+						Editar Livro
+					</div>
+					<div class="botao botao-excluir" @click="irParaExcluir">
+						Excluir Livro
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Texto motivacional -->
+		<div class="texto-motivacional">
+			Deixe sua <span class="destaque">sede</span> de
+			<span class="destaque">conhecimento</span> levá-lo além das
+			<span class="destaque">estrelas</span>.
+		</div>
+
+		<!-- Popup -->
+		<div v-if="showPopup" :class="['popup', popupType]">
+			{{ popupMessage }}
+		</div>
+	</div>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { apiRequest } from "@/utils/apiRequest";
 import { showMessage } from "@/utils/showMessage";
 import { apiRoutes } from "@/assets/rotas";
 import { Book } from "./type/types";
+import { checkLogin } from "@/utils/checkLogin";
 
 const router = useRouter();
 
 const popupMessage = ref("");
 const popupType = ref("");
 const showPopup = ref(false);
+const estaLogado = ref(checkLogin());
 
 const livro = ref({
 	id: "",
@@ -63,59 +118,6 @@ async function irParaExcluir() {
 	}
 }
 </script>
-
-<template>
-	<div class="pagina">
-		<!-- Logo -->
-		<div class="logo">
-			<img src="/favicon.ico" alt="Logo BibSys" />
-			<span>BibSys</span>
-		</div>
-
-		<!-- Link voltar -->
-		<div class="voltar-lista" @click="$router.push('/listarlivro')">
-			← Voltar para a lista
-		</div>
-
-		<!-- Caixa principal -->
-		<div class="caixa-principal">
-			<!-- Imagem do livro -->
-			<div class="caixa-imagem">
-				<img :src="livro.photos" :alt="livro.title" />
-			</div>
-
-			<!-- Conteúdo textual -->
-			<div class="conteudo">
-				<div class="titulo-livro">{{ livro.title }}</div>
-				<div class="autor">Autor: {{ livro.author || "Desconhecido" }}</div>
-				<div class="ano">Ano: {{ livro.year || "-" }}</div>
-				<div class="paginas">Páginas: {{ livro.pages || "-" }}</div>
-
-				<!-- Botões -->
-				<div class="botoes">
-					<div class="botao botao-editar" @click="irParaEditar">
-						Editar Livro
-					</div>
-					<div class="botao botao-excluir" @click="irParaExcluir">
-						Excluir Livro
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Texto motivacional -->
-		<div class="texto-motivacional">
-			Deixe sua <span class="destaque">sede</span> de
-			<span class="destaque">conhecimento</span> levá-lo além das
-			<span class="destaque">estrelas</span>.
-		</div>
-
-		<!-- Popup -->
-		<div v-if="showPopup" :class="['popup', popupType]">
-			{{ popupMessage }}
-		</div>
-	</div>
-</template>
 
 <style scoped>
 :global(html, body, #app) {
