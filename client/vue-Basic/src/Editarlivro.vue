@@ -76,13 +76,13 @@ import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
-const book = JSON.parse(localStorage.getItem("bookSelecionado") || "{}");
+const livro = JSON.parse(localStorage.getItem("livroSelecionado"));
 
-const titulo = ref(book.title);
-const autor = ref(book.author);
-const ano = ref(book.year);
-const paginas = ref(book.pages);
-const descricao = ref(book.photos);
+const titulo = ref(livro.title);
+const autor = ref(livro.author);
+const ano = ref(livro.year);
+const paginas = ref(livro.pages);
+const descricao = ref(livro.photos);
 
 const popupMessage = ref("");
 const popupType = ref("");
@@ -96,8 +96,9 @@ async function editarLivro() {
 		paginas.value &&
 		descricao.value
 	) {
+		
 		try {
-			await apiRequest(apiRoutes.books.base, router, {
+			await apiRequest(apiRoutes.books.porId(livro.id), router, {
 				method: "PUT",
 				body: {
 					title: titulo.value,
