@@ -1,6 +1,6 @@
 
 ![Logo](client/vue-Basic/Pngs/Home.png)
-Sistema simples de gerenciamento de livros, desenvolvido com **Node.js (Express + Supabase)** no back-end e **Vue 3 + Vite** no front-end.
+Este projeto consiste em um sistema para o gerenciamento de livros,desenvolvido com **Node.js (Express + Supabase)** no back-end e **Vue 3 + Vite** no front-end. Permitindo que usuários realizem operações essenciais como cadastro de novos livros, listagem, consulta de detalhes, edição e exclusão.
 
 ---
 
@@ -108,7 +108,6 @@ Tela onde o usuário pode visualizar **todas as informações de um livro**, al�
 Tela onde o usuário pode **editar as informações de um livro** já cadastrado no sistema.  
 
 ![Tela Edição de Livro](client/vue-Basic/Pngs/Editar_livro.png)
-
 
 ## 📂 Estrutura do código
 
