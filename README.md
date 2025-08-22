@@ -1,5 +1,5 @@
-# 📚 BibSys
 
+![Logo](client/vue-Basic/Pngs/Home.png)
 Sistema simples de gerenciamento de livros, desenvolvido com **Node.js (Express + Supabase)** no back-end e **Vue 3 + Vite** no front-end.
 
 ---
@@ -77,6 +77,9 @@ Abra no navegador:
 - Axios
 
 ## 🖼️ Interface
+Tela inicial do sistema:
+
+
 
 ## 📂 Estrutura do código
 
