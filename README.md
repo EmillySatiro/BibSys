@@ -19,7 +19,7 @@ npm install
 
 ```bash
 cd ..
-cd server
+cd client
 npm install
 ```
 
@@ -39,7 +39,6 @@ SUPABASE_DB_PASSWORD=your_supabase_password
 Caso seja necessário executar as migrações do banco, utilizar:
 
 ```bash
-cd ..
 cd server
 npm run migration
 ```
