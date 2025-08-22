@@ -63,10 +63,10 @@ cd client
 npm run dev
 ```
 
-## 🌐 Acessar o sistema
+## 🔗 Acesse o Sistema
 
 Abra no navegador:  
-👉 [http://localhost:5173](http://localhost:5173)
+👉 [http://127.0.0.1:5173/](http://127.0.0.1:5173/)
 
 ## 🛠️ Tecnologias utilizadas
 
