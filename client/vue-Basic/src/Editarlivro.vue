@@ -2,13 +2,8 @@
 	<div class="tela-cadastro">
 		<!-- Fundo SVG -->
 		<div class="svg-container2" aria-hidden="true">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 2000 2153.885"
-				preserveAspectRatio="xMidYMid slice"
-				width="100%"
-				height="100%"
-			>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2153.885" preserveAspectRatio="xMidYMid slice"
+				width="100%" height="100%">
 				<image href="/Pngs/fundo-estrelas.ico" width="100%" height="100%" />
 			</svg>
 		</div>
@@ -23,36 +18,12 @@
 			<div class="caixa-rodape"></div>
 
 			<!-- Inputs reais -->
-			<input
-				v-model="titulo"
-				type="text"
-				class="input-real titulo"
-				placeholder="Digite o título do livro"
-			/>
-			<input
-				v-model="autor"
-				type="text"
-				class="input-real autor"
-				placeholder="Digite o nome do autor"
-			/>
-			<input
-				v-model="ano"
-				type="text"
-				class="input-real ano"
-				placeholder="Ano"
-			/>
-			<input
-				v-model="paginas"
-				type="number"
-				class="input-real paginas"
-				placeholder="Digite a quantidade de páginas"
-			/>
-			<input
-				v-model="descricao"
-				type="text"
-				class="input-real descricao"
-				placeholder="Informe URL da imagem"
-			/>
+			<input v-model="titulo" type="text" class="input-real titulo" placeholder="Digite o título do livro" />
+			<input v-model="autor" type="text" class="input-real autor" placeholder="Digite o nome do autor" />
+			<input v-model="ano" type="text" class="input-real ano" placeholder="DD/MM/AAAA" />
+			<input v-model="paginas" type="number" class="input-real paginas"
+				placeholder="Digite a quantidade de páginas" />
+			<input v-model="descricao" type="text" class="input-real descricao" placeholder="Informe URL da imagem" />
 
 			<!-- Botões -->
 			<div class="botao-cadastrar" @click="editarLivro">Editar livro</div>
@@ -72,12 +43,7 @@
 			<div class="titulo-principal">BibSys</div>
 
 			<div class="svg-container">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="292.607"
-					height="255.13"
-					viewBox="0 0 292.607 255.13"
-				>
+				<svg xmlns="http://www.w3.org/2000/svg" width="292.607" height="255.13" viewBox="0 0 292.607 255.13">
 					<image href="/favicon.ico" width="200" height="100" />
 				</svg>
 			</div>
@@ -110,12 +76,13 @@ import { showMessage } from "@/utils/showMessage";
 import { apiRequest } from "@/utils/apiRequest";
 
 const router = useRouter();
+const livro = JSON.parse(localStorage.getItem("livroSelecionado"));
 
-const titulo = ref("");
-const autor = ref("");
-const ano = ref("");
-const paginas = ref("");
-const descricao = ref("");
+const titulo = ref(livro.title);
+const autor = ref(livro.author);
+const ano = ref(livro.year);
+const paginas = ref(livro.pages);
+const descricao = ref(livro.photos);
 
 const popupMessage = ref("");
 const popupType = ref("");
@@ -129,8 +96,9 @@ async function editarLivro() {
 		paginas.value &&
 		descricao.value
 	) {
+		
 		try {
-			await apiRequest(apiRoutes.books.base, router, {
+			await apiRequest(apiRoutes.books.porId(livro.id), router, {
 				method: "PUT",
 				body: {
 					title: titulo.value,
@@ -203,11 +171,13 @@ body {
 	z-index: 0;
 	pointer-events: none;
 }
+
 .signup-text {
 	position: absolute;
 	bottom: 24px;
 	top: 30px;
-	left: 1000px; /* alinhamento dentro da caixa cinza */
+	left: 1000px;
+	/* alinhamento dentro da caixa cinza */
 	font-size: 20px;
 	color: #fff;
 }
@@ -217,6 +187,7 @@ body {
 	font-weight: 600;
 	cursor: pointer;
 }
+
 .fundo-geral {
 	position: absolute;
 	top: 0;
@@ -251,6 +222,7 @@ body {
 	border: 2px solid #f1f7f7;
 	z-index: 2;
 }
+
 .caixa-rodape {
 	width: 1242px;
 	height: 61px;
@@ -273,30 +245,35 @@ body {
 	font-family: Tektur;
 	padding: 8px;
 }
+
 .input-real.titulo {
 	left: 112px;
 	top: 337px;
 	width: 469px;
 	height: 46px;
 }
+
 .input-real.autor {
 	left: 112px;
 	top: 450px;
 	width: 469px;
 	height: 46px;
 }
+
 .input-real.ano {
 	left: 112px;
 	top: 553px;
 	width: 469px;
 	height: 46px;
 }
+
 .input-real.paginas {
 	left: 112px;
 	top: 654px;
 	width: 469px;
 	height: 46px;
 }
+
 .input-real.descricao {
 	left: 818px;
 	top: 348px;
@@ -315,6 +292,7 @@ body {
 	transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.3s;
 	font-family: Tektur;
 }
+
 .botao-cadastrar {
 	width: 302px;
 	height: 52px;
@@ -325,6 +303,7 @@ body {
 	color: #021a1a;
 	font-size: 40px;
 }
+
 .botao-voltar {
 	width: 302px;
 	height: 52px;
@@ -352,22 +331,27 @@ body {
 	font-family: Tektur;
 	z-index: 4;
 }
+
 .label.titulo {
 	left: 111px;
 	top: 298px;
 }
+
 .label.autor {
 	left: 112px;
 	top: 415px;
 }
+
 .label.ano {
 	left: 110px;
 	top: 516px;
 }
+
 .label.paginas {
 	left: 111px;
 	top: 616px;
 }
+
 .label.descricao {
 	left: 820px;
 	top: 306px;
@@ -384,6 +368,7 @@ body {
 	font-weight: 400;
 	z-index: 4;
 }
+
 .svg-container {
 	position: absolute;
 	top: 110px;
@@ -391,6 +376,7 @@ body {
 	width: 93.14px;
 	height: 86.383px;
 }
+
 .descricao-formulario {
 	position: absolute;
 	left: 840px;
@@ -402,9 +388,11 @@ body {
 	color: white;
 	z-index: 4;
 }
+
 .descricao-formulario .highlight {
 	color: #2cc295;
 }
+
 .slogan {
 	position: absolute;
 	left: 181px;
@@ -415,6 +403,7 @@ body {
 	color: #2cc295;
 	z-index: 4;
 }
+
 .linha-vertical {
 	width: 410px;
 	height: 0px;
@@ -445,19 +434,23 @@ body {
 	box-shadow: 0 0 25px rgba(44, 194, 149, 0.7);
 	animation: popupAnim 0.3s ease-out;
 }
+
 .popup.error {
 	background: #ff4c4c;
 	text-shadow: 0 0 8px #ff0000;
 }
+
 .popup.success {
 	background: #2cc295;
 	text-shadow: 0 0 8px #00ff88;
 }
+
 @keyframes popupAnim {
 	0% {
 		transform: translate(-50%, -60%) scale(0.8);
 		opacity: 0;
 	}
+
 	100% {
 		transform: translate(-50%, -50%) scale(1);
 		opacity: 1;

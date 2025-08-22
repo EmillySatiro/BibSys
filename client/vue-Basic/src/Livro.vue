@@ -1,29 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { Book } from "./type/types";
 
 const router = useRouter();
 const route = useRoute();
 
 const livro = ref({
-	nome: "",
-	autor: "",
-	ano: null,
-	paginas: null,
-	img: "",
+	id: "",
+	title: "",
+	author: "",
+	year: "",
+	pages: "",
+	photos: ""
 });
 
 onMounted(() => {
-	// Recebe dados do livro via query params
-	if (route.query.nome) livro.value.nome = route.query.nome;
-	if (route.query.img) livro.value.img = route.query.img;
-	if (route.query.autor) livro.value.autor = route.query.autor;
-	if (route.query.ano) livro.value.ano = route.query.ano;
-	if (route.query.paginas) livro.value.paginas = route.query.paginas;
+	livro.value = JSON.parse(localStorage.getItem("livroSelecionado"));
+	console.log("Livro selecionado: ", livro)
 });
 
-function irParaCadastrar() {
-	router.push("/editarlivro");
+function irParaEditar() {
+	router.push({ name: "EditarLivro", params: { id: livro.value.id }, });
 }
 
 function irParaExcluir() {
@@ -54,19 +52,19 @@ function irParaExcluir() {
 		<div class="caixa-principal">
 			<!-- Imagem do livro -->
 			<div class="caixa-imagem">
-				<img :src="livro.img" alt="Capa do livro" />
+				<img :src="livro.photos" :alt="livro.title" />
 			</div>
 
 			<!-- Conteúdo textual -->
 			<div class="conteudo">
-				<div class="titulo-livro">{{ livro.nome }}</div>
-				<div class="autor">Autor: {{ livro.autor || "Desconhecido" }}</div>
-				<div class="ano">Ano: {{ livro.ano || "-" }}</div>
-				<div class="paginas">Páginas: {{ livro.paginas || "-" }}</div>
+				<div class="titulo-livro">{{ livro.title }}</div>
+				<div class="autor">Autor: {{ livro.author || "Desconhecido" }}</div>
+				<div class="ano">Ano: {{ livro.year || "-" }}</div>
+				<div class="paginas">Páginas: {{ livro.pages || "-" }}</div>
 
 				<!-- Botões -->
 				<div class="botoes">
-					<div class="botao botao-editar" @click="irParaCadastrar">
+					<div class="botao botao-editar" @click="irParaEditar">
 						Editar Livro
 					</div>
 					<div class="botao botao-excluir" @click="irParaExcluir">
@@ -98,12 +96,14 @@ function irParaExcluir() {
 .pagina {
 	width: 100vw;
 	min-height: 100vh;
-	padding-top: 120px; /* um pouco mais para baixo */
+	padding-top: 120px;
+	/* um pouco mais para baixo */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 }
+
 /* Link voltar */
 .voltar-lista {
 	position: absolute;
@@ -115,10 +115,12 @@ function irParaExcluir() {
 	font-weight: 600;
 	transition: color 0.2s, transform 0.2s;
 }
+
 .voltar-lista:hover {
 	color: #f1f7f7;
 	transform: translateX(-4px);
 }
+
 /* Caixa principal */
 .caixa-principal {
 	display: flex;
@@ -142,10 +144,12 @@ function irParaExcluir() {
 	align-items: center;
 	gap: 15px;
 }
+
 .logo img {
 	width: 60px;
 	height: 60px;
 }
+
 .logo span {
 	font-size: 48px;
 	font-family: "Stick No Bills", sans-serif;
@@ -162,12 +166,14 @@ function irParaExcluir() {
 	box-shadow: 0 0 20px rgba(44, 194, 149, 0.3);
 	flex-shrink: 0;
 }
+
 .caixa-imagem img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	transition: transform 0.3s;
 }
+
 .caixa-imagem img:hover {
 	transform: scale(1.05);
 }
@@ -180,19 +186,23 @@ function irParaExcluir() {
 	gap: 15px;
 	word-wrap: break-word;
 }
+
 .titulo-livro {
 	font-size: 32px;
 	color: #f1f7f7;
 	font-weight: 400;
 	line-height: 1.3;
-	word-break: break-word; /* para títulos longos */
+	word-break: break-word;
+	/* para títulos longos */
 }
+
 .autor,
 .ano,
 .paginas {
 	font-size: 18px;
 	color: #ccc;
-	word-break: break-word; /* evita overflow */
+	word-break: break-word;
+	/* evita overflow */
 }
 
 /* Botões */
@@ -201,6 +211,7 @@ function irParaExcluir() {
 	gap: 20px;
 	margin-top: 20px;
 }
+
 .botao {
 	padding: 12px 40px;
 	border-radius: 8px;
@@ -210,20 +221,24 @@ function irParaExcluir() {
 	user-select: none;
 	transition: 0.2s;
 }
+
 .botao-editar {
 	background-color: #f1f7f7;
 	color: #021a1a;
 }
+
 .botao-editar:hover {
 	transform: scale(1.05);
 	box-shadow: 0 8px 20px rgba(44, 194, 149, 0.4);
 	background-color: #2cc295;
 	color: white;
 }
+
 .botao-excluir {
 	background-color: #ff4c4c;
 	color: white;
 }
+
 .botao-excluir:hover {
 	transform: scale(1.05);
 	box-shadow: 0 8px 20px rgba(255, 76, 76, 0.4);
@@ -237,6 +252,7 @@ function irParaExcluir() {
 	text-align: center;
 	color: #f1f7f7;
 }
+
 .destaque {
 	color: #2cc295;
 	font-weight: 600;

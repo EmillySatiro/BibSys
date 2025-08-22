@@ -30,9 +30,10 @@ const routes = [
     component: Cadastrarlivro
   },
   {
-    path: '/editarlivro',
+    path: '/editarlivro/:id',
     name: 'EditarLivro',
-    component: Editarlivro
+    component: Editarlivro,
+    props: true
   },
   {
     path: '/livro',
