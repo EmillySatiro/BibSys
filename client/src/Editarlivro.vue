@@ -115,7 +115,6 @@ async function editarLivro() {
 				showPopup: showPopup,
 			});
 			setTimeout(() => (voltarHome()), 1500);
-			voltarHome();
 		} catch (error) {
 			console.error(error);
 			showMessage({
