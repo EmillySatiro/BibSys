@@ -65,8 +65,8 @@ npm run dev
 
 ## 🌐 Acessar o sistema
 
-Abra no navegador:
-👉 [http://localhost:5173][http://localhost:5173]
+Abra no navegador:  
+👉 [http://localhost:5173](http://localhost:5173)
 
 ## 🛠️ Tecnologias utilizadas
 
