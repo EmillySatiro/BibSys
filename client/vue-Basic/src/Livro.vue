@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { apiRequest } from '@/utils/apiRequest';
+import { apiRoutes } from '@/assets/rotas';
 import { Book } from "./type/types";
 
 const router = useRouter();
@@ -24,14 +26,31 @@ function irParaEditar() {
 	router.push({ name: "EditarLivro", params: { id: livro.value.id }, });
 }
 
-function irParaExcluir() {
-	const sucesso = Math.random() > 0.2;
-	if (sucesso) {
-		alert("Livro excluído com sucesso!");
-		router.push("/listarlivro");
-	} else {
-		alert("Falha ao excluir o livro!");
-	}
+async function irParaExcluir() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Por favor, faça login para excluir um livro');
+    router.push('/login');
+    return;
+  }
+
+  if (!livro.value.id) {
+    alert('Erro: ID do livro não encontrado');
+    return;
+  }
+
+  try {
+    const response = await apiRequest(apiRoutes.books.porId(livro.value.id), router, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+	localStorage.removeItem('livroSelecionado');
+	router.push('/listarlivro');
+  } catch (error: any) {
+    console.error('Erro ao excluir livro:', JSON.stringify(error.response, null, 2));
+    alert(error.response?.data?.error || 'Falha ao excluir o livro!');
+  }
 }
 </script>
 
