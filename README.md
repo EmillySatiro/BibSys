@@ -114,35 +114,37 @@ Tela onde o usuário pode **editar as informações de um livro** já cadastrado
 ```bash
 📂 BibSys
 ├── 📂 client
-│   └── 📂 vue-Basic
-│       ├── 📂 node_modules
-│       ├── 📂 Pngs
-│       ├── 📂 public
-│       ├── 📂 src
-│       │   ├── 📂 assets
-│       │   ├── 📂 utils
-│       │   ├── 📄 App.vue
-│       │   ├── 📄 Cadastrarlivro.vue
-│       │   ├── 📄 Cadastro_usuario.vue
-│       │   ├── 📄 Editarlivro.vue
-│       │   ├── 📄 Home.vue
-│       │   ├── 📄 Listarlivro.vue
-│       │   ├── 📄 Livro.vue
-│       │   ├── 📄 login.vue
-│       │   ├── 📄 main.js
-│       │   └── 📄 router.js
-│       ├── 📄 .gitignore
-│       ├── 📄 index.html
-│       ├── 📄 jsconfig.json
-│       ├── 📄 package-lock.json
-│       ├── 📄 package.json
-│       ├── 📄 README.md
-│       └── 📄 vite.config.js
+│   ├── 📂 node_modules
+│   ├── 📂 Pngs
+│   ├── 📂 public
+│   ├── 📂 src
+│   │   ├── 📂 assets
+│   │   ├── 📂 components
+│   │   ├── 📂 type
+│   │   ├── 📂 utils
+│   │   ├── 📄 App.vue
+│   │   ├── 📄 Cadastrarlivro.vue
+│   │   ├── 📄 Cadastro_usuario.vue
+│   │   ├── 📄 Editarlivro.vue
+│   │   ├── 📄 Home.vue
+│   │   ├── 📄 Listarlivro.vue
+│   │   ├── 📄 Livro.vue
+│   │   ├── 📄 login.vue
+│   │   ├── 📄 main.js
+│   │   └── 📄 router.js
+│   │   └── 📄 shims-vue.d.ts
+│   ├── 📄 .gitignore
+│   ├── 📄 index.html
+│   ├── 📄 jsconfig.json
+│   ├── 📄 package-lock.json
+│   ├── 📄 package.json
+│   ├── 📄 README.md
+│   └── 📄 vite.config.js
 ├── 📂 server
 │   ├── 📂 node_modules
 │   ├── 📂 src
-│   │   ├── server.ts
-│   │   ├── supabaseConnection.ts
+│   │   ├── 📄 server.ts
+│   │   ├── 📄 supabaseConnection.ts
 │   ├── 📂 supabase
 │   │   ├── 📂 migrations
 │   ├── 🔑 .env
