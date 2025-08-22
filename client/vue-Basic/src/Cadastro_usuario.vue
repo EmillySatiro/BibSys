@@ -39,9 +39,10 @@ async function irParaHome() {
 					popupType: popupType,
 					showPopup: showPopup,
 				});
+				voltarHome()
 			} catch (error) {
 				showMessage({
-					text: "Erro ao fazer login!",
+					text: "Erro ao fazer registro!",
 					type: "error",
 					popupMessage: popupMessage,
 					popupType: popupType,
@@ -59,6 +60,10 @@ async function irParaHome() {
 			showPopup: showPopup,
 		});
 	}
+}
+
+function voltarHome() {
+	router.push({ name: "Login" });
 }
 </script>
 
