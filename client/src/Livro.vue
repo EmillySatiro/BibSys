@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { apiRequest } from '@/utils/apiRequest';
-import { apiRoutes } from '@/assets/rotas';
+import { apiRequest } from "@/utils/apiRequest";
+import { showMessage } from "@/utils/showMessage";
+import { apiRoutes } from "@/assets/rotas";
 import { Book } from "./type/types";
 
 const router = useRouter();
-const route = useRoute();
+
+const popupMessage = ref("");
+const popupType = ref("");
+const showPopup = ref(false);
 
 const livro = ref({
 	id: "",
@@ -14,43 +18,49 @@ const livro = ref({
 	author: "",
 	year: "",
 	pages: "",
-	photos: ""
+	photos: "",
 });
 
 onMounted(() => {
 	livro.value = JSON.parse(localStorage.getItem("livroSelecionado"));
-	console.log("Livro selecionado: ", livro)
+	console.log("Livro selecionado: ", livro);
 });
 
 function irParaEditar() {
-	router.push({ name: "EditarLivro", params: { id: livro.value.id }, });
+	router.push({ name: "EditarLivro", params: { id: livro.value.id } });
 }
 
 async function irParaExcluir() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    alert('Por favor, faça login para excluir um livro');
-    router.push('/login');
-    return;
-  }
+	if (!livro.value.id) {
+		alert("Erro: ID do livro não encontrado");
+		return;
+	}
 
-  if (!livro.value.id) {
-    alert('Erro: ID do livro não encontrado');
-    return;
-  }
+	try {
+		await apiRequest(apiRoutes.books.porId(livro.value.id), router, {
+			method: "DELETE",
+		});
 
-  try {
-    const response = await apiRequest(apiRoutes.books.porId(livro.value.id), router, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-	localStorage.removeItem('livroSelecionado');
-	router.push('/listarlivro');
-  } catch (error: any) {
-    console.error('Erro ao excluir livro:', JSON.stringify(error.response, null, 2));
-    alert(error.response?.data?.error || 'Falha ao excluir o livro!');
-  }
+		localStorage.removeItem("livroSelecionado");
+		showMessage({
+			text: "Livro excluído com sucesso!",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
+		setTimeout(() => router.push("/listarlivro"), 1500);
+	} catch (error: any) {
+		console.error(
+			"Erro ao excluir livro:",
+			JSON.stringify(error.response, null, 2)
+		);
+		showMessage({
+			text: "Falha ao excluir o livro!",
+			popupMessage: popupMessage,
+			popupType: popupType,
+			showPopup: showPopup,
+		});
+	}
 }
 </script>
 
@@ -98,6 +108,11 @@ async function irParaExcluir() {
 			Deixe sua <span class="destaque">sede</span> de
 			<span class="destaque">conhecimento</span> levá-lo além das
 			<span class="destaque">estrelas</span>.
+		</div>
+
+		<!-- Popup -->
+		<div v-if="showPopup" :class="['popup', popupType]">
+			{{ popupMessage }}
 		</div>
 	</div>
 </template>
@@ -275,5 +290,45 @@ async function irParaExcluir() {
 .destaque {
 	color: #2cc295;
 	font-weight: 600;
+}
+
+/* Popup */
+.popup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	min-width: 320px;
+	padding: 20px 40px;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: 600;
+	color: #fff;
+	z-index: 999;
+	box-shadow: 0 0 25px rgba(44, 194, 149, 0.7);
+	animation: popupAnim 0.3s ease-out;
+}
+
+.popup.error {
+	background: #ff4c4c;
+	text-shadow: 0 0 8px #ff0000;
+}
+
+.popup.success {
+	background: #2cc295;
+	text-shadow: 0 0 8px #00ff88;
+}
+
+@keyframes popupAnim {
+	0% {
+		transform: translate(-50%, -60%) scale(0.8);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 1;
+	}
 }
 </style>
