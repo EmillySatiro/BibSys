@@ -5,9 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tsx src/server.ts",
-		"migration": "npx supabase link --project-ref arzbcflugfoauhfnnsef && npx supabase db push --yes",
-		"build": "tsc -p tsconfig.json",
-    	"vercel-build": "npm run build"
+		"migration": "npx supabase link --project-ref arzbcflugfoauhfnnsef && npx supabase db push --yes"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.45.4",
