@@ -13,8 +13,8 @@ export function showMessage({
 	popupType,
 	showPopup,
 }: showMessageProps) {
-    console.log(text)
-    console.log(type)
+	console.log(text);
+	console.log(type);
 	popupMessage.value = text;
 	popupType.value = type;
 	showPopup.value = true;
