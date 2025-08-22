@@ -79,18 +79,22 @@ Abra no navegador:
 
 ### Tela Home
 Tela onde o usuário pode escolher entre **cadastrar novos livros** ou **listar os já cadastrados**.  
+
 ![Tela Home](client/vue-Basic/Pngs/Tela_Home.png)
 
 ### Tela de Login
 Tela onde o usuário acessa o sistema utilizando seu **e-mail e senha previamente cadastrados**.  
+
 ![Tela Login](client/vue-Basic/Pngs/Tela_login.png)
 
 ### Tela de Cadastro de Usuário
 Tela utilizada para **registrar um novo usuário**, informando e-mail e senha, permitindo assim o acesso ao sistema.  
+
 ![Tela Cadastro](client/vue-Basic/Pngs/tela_cadastro.png)
 
 ### Tela de Cadastro de Livro
 Tela onde o usuário pode **criar um novo registro de livro**, preenchendo suas informações para adicioná-lo ao sistema.  
+
 ![Tela Cadastro Livro](client/vue-Basic/Pngs/Tela_cadastrolivro.png)
 
 
