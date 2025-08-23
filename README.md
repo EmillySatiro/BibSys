@@ -2,7 +2,11 @@
 ![Logo](client/Pngs/Home.png)
 Este projeto consiste em um sistema para o gerenciamento de livros,desenvolvido com **Node.js (Express + Supabase)** no back-end e **Vue 3 + Vite** no front-end. Permitindo que usuários realizem operações essenciais como cadastro de novos livros, listagem, consulta de detalhes, edição e exclusão.
 
----
+<p align="center">
+  <a href="https://youtu.be/mx-tETQuVcU?si=rf8AXydEvceA45ue" target="_blank">
+    <img src="https://img.youtube.com/vi/mx-tETQuVcU/0.jpg" alt="Assista no YouTube" width="60%"/>
+  </a>
+</p>
 
 ## 🚀 Instalação
 
