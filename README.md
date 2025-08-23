@@ -112,47 +112,47 @@ Tela onde o usuário pode **editar as informações de um livro** já cadastrado
 ## 📂 Estrutura do código
 
 ```bash
-📂 BibSys
-├── 📂 client
-│   ├── 📂 node_modules
-│   ├── 📂 Pngs
-│   ├── 📂 public
-│   ├── 📂 src
-│   │   ├── 📂 assets
-│   │   ├── 📂 components
-│   │   ├── 📂 type
-│   │   ├── 📂 utils
-│   │   ├── 📄 App.vue
-│   │   ├── 📄 Cadastrarlivro.vue
-│   │   ├── 📄 Cadastro_usuario.vue
-│   │   ├── 📄 Editarlivro.vue
-│   │   ├── 📄 Home.vue
-│   │   ├── 📄 Listarlivro.vue
-│   │   ├── 📄 Livro.vue
-│   │   ├── 📄 login.vue
-│   │   ├── 📄 main.js
-│   │   └── 📄 router.js
-│   │   └── 📄 shims-vue.d.ts
-│   ├── 📄 .gitignore
-│   ├── 📄 index.html
-│   ├── 📄 jsconfig.json
-│   ├── 📄 package-lock.json
-│   ├── 📄 package.json
-│   ├── 📄 README.md
-│   └── 📄 vite.config.js
-├── 📂 server
-│   ├── 📂 node_modules
-│   ├── 📂 src
-│   │   ├── 📄 server.ts
-│   │   ├── 📄 supabaseConnection.ts
-│   ├── 📂 supabase
-│   │   ├── 📂 migrations
-│   ├── 🔑 .env
-│   ├── 🔑 .env.example
-│   ├── 📄 package-lock.json
-│   ├── 📄 package.json
-│   └── 📄 tsconfig.json
-├── 📄 .gitignore
-└── 📄 README.md
+📂 BibSys                               # Pasta raiz do projeto
+├── 📂 client                           # Front-End (Vue 3 + Vite)
+│   ├── 📂 node_modules                 # Dependências - Front
+│   ├── 📂 Pngs                         # Imagens utilizadas pelo projeto
+│   ├── 📂 public                       # Arquivos públicos (favicon)
+│   ├── 📂 src                          # Código fonte principal - Front
+│   │   ├── 📂 assets                   # Arquivos estáticos (rotas)
+│   │   ├── 📂 components               # Componentes reutilizáveis (Loading)
+│   │   ├── 📂 type                     # Definição de tipos (Book)
+│   │   ├── 📂 utils                    # Funções auxiliares
+│   │   ├── 📄 App.vue                  # Componente raiz do Vue
+│   │   ├── 📄 Cadastrarlivro.vue       # Página de cadastro de livros
+│   │   ├── 📄 Cadastro_usuario.vue     # Página de registro de usuários
+│   │   ├── 📄 Editarlivro.vue          # Página de edição de livros
+│   │   ├── 📄 Home.vue                 # Página inicial
+│   │   ├── 📄 Listarlivro.vue          # Página de exibição de todos os livros
+│   │   ├── 📄 Livro.vue                # Página de exibição de um livro
+│   │   ├── 📄 login.vue                # Página de login
+│   │   ├── 📄 main.js                  # Arquivo principal
+│   │   └── 📄 router.js                # Configuração das rotas
+│   │   └── 📄 shims-vue.d.ts           # Definição para suportar arquivos .vue no TypeScript
+│   ├── 📄 .gitignore                   # Itens ignorados pelo Git - Front
+│   ├── 📄 index.html                   # Arquivo que carrega o Vue
+│   ├── 📄 jsconfig.json                # Configurações do JavaScript - Front
+│   ├── 📄 package-lock.json            # Versões das dependências - Front
+│   ├── 📄 package.json                 # Dependências e scripts - Front
+│   ├── 📄 README.md                    # Documentação - Front
+│   └── 📄 vite.config.js               # Configuração do vite
+├── 📂 server                           # Back-End (Node.js + Express + Supabase)
+│   ├── 📂 node_modules                 # Dependências - Back
+│   ├── 📂 src                          # Código fonte principal - Back
+│   │   ├── 📄 server.ts                # Rotas do express
+│   │   ├── 📄 supabaseConnection.ts    # Conexão com o Supabase
+│   ├── 📂 supabase                     # Banco de Dados - Supabase
+│   │   ├── 📂 migrations               # Scripts de migração do banco de dados
+│   ├── 🔑 .env                         # Variáveis de ambiente
+│   ├── 🔑 .env.example                 # Exemplo das variáveis de ambiente
+│   ├── 📄 package-lock.json            # Versões das dependências - Front
+│   ├── 📄 package.json                 # Dependências e scripts - Front
+│   └── 📄 tsconfig.json                # Configurações do TypeScript - Back
+├── 📄 .gitignore                       # Itens ignorados pelo Git do projeto
+└── 📄 README.md                        # Documentação do projeto
 
 ```
